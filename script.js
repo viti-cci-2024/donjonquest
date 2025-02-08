@@ -220,47 +220,55 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Vérifier la présence d'une créature sur la case
-    const creatureIndex = gameState.creatures.findIndex(creature =>
-      creature.x === gameState.player.x && creature.y === gameState.player.y
-    );
+// Vérifier la présence d'une créature sur la case
+const creatureIndex = gameState.creatures.findIndex(creature =>
+  creature.x === gameState.player.x && creature.y === gameState.player.y
+);
 
-    if (creatureIndex !== -1) {
-      let creature = gameState.creatures[creatureIndex];
-      addHistory(`Rencontre avec une créature (HP: ${creature.hp}, ATK: ${creature.attack}).`, "encounter");
+if (creatureIndex !== -1) {
+  let creature = gameState.creatures[creatureIndex];
+  addHistory(`Rencontre avec une créature (HP: ${creature.hp}, ATK: ${creature.attack}).`, "encounter");
 
-      // Combat en échange de dégâts (combat en plusieurs rounds)
-      while (gameState.player.hp > 0 && creature.hp > 0) {
-        // Le joueur attaque la créature
-        creature.hp -= gameState.player.attack;
-        addHistory(`Vous attaquez la créature et lui infligez ${gameState.player.attack} dégâts. (HP restant de la créature: ${Math.max(creature.hp, 0)})`, "attack");
+  // Ajoute l'effet de tremblement sur la grille
+  gridElement.classList.add('shake');
+  setTimeout(() => {
+    gridElement.classList.remove('shake');
+  }, 500);
 
-        // Si la créature est vaincue
-        if (creature.hp <= 0) {
-          addHistory("La créature est vaincue !", "win");
-          gameState.creatures.splice(creatureIndex, 1);
-          gameState.player.hp = Math.min(gameState.player.maxHp, gameState.player.hp + 10);
-          gameState.player.exp += 1;
-          updateStats();
-          break;
-        }
+  // Combat en échange de dégâts (combat en plusieurs rounds)
+  while (gameState.player.hp > 0 && creature.hp > 0) {
+    // Déclenche un flash sur l'écran au début du combat
+    triggerFlashEffect();
 
-        // La créature contre-attaque
-        gameState.player.hp -= creature.attack;
-        addHistory(`La créature vous attaque et vous inflige ${creature.attack} dégâts. (Votre HP restant: ${Math.max(gameState.player.hp, 0)})`, "damage");
+    // Le joueur attaque la créature
+    creature.hp -= gameState.player.attack;
+    addHistory(`Vous attaquez la créature et lui infligez ${gameState.player.attack} dégâts. (HP restant de la créature: ${Math.max(creature.hp, 0)})`, "attack");
 
-        // Si le joueur est mort
-        if (gameState.player.hp <= 0) {
-          addHistory("Vous êtes mort. La partie va se réinitialiser.", "lose");
-          disableControls();
-          setTimeout(initializeGame, 2000);
-          return;
-        }
-      }
-      // Séparer le groupe d'actions (combat) avec un séparateur
-      addHistorySeparator();
+    // Si la créature est vaincue
+    if (creature.hp <= 0) {
+      addHistory("La créature est vaincue !", "win");
+      gameState.creatures.splice(creatureIndex, 1);
+      gameState.player.hp = Math.min(gameState.player.maxHp, gameState.player.hp + 10);
+      gameState.player.exp += 1;
+      updateStats();
+      break;
+    }
+
+    // La créature contre-attaque
+    gameState.player.hp -= creature.attack;
+    addHistory(`La créature vous attaque et vous inflige ${creature.attack} dégâts. (Votre HP restant: ${Math.max(gameState.player.hp, 0)})`, "damage");
+
+    // Si le joueur est mort
+    if (gameState.player.hp <= 0) {
+      addHistory("Vous êtes mort. La partie va se réinitialiser.", "lose");
+      disableControls();
+      setTimeout(initializeGame, 2000);
+      return;
     }
   }
+  addHistorySeparator();
+}
+}
 
   // Désactive les contrôles (boutons)
   function disableControls() {
@@ -288,6 +296,18 @@ document.addEventListener('DOMContentLoaded', () => {
   function init() {
     createGrid();
     initializeGame();
+  }
+
+  // l’effet d’éclair
+
+  function triggerFlashEffect() {
+    const flash = document.createElement("div");
+    flash.classList.add("flash");
+    document.body.appendChild(flash);
+  
+    setTimeout(() => {
+      flash.remove();
+    }, 300);
   }
 
   init();
