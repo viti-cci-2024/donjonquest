@@ -419,8 +419,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // La créature contre-attaque
-        // La créature contre-attaque
         gameState.player.hp -= creature.attack;
+        triggerFlashEffect("rgba(255, 0, 0, 0.6)"); // Rouge quand le joueur prend des dégâts
         addHistory(
           `La créature vous attaque et vous inflige ${
             creature.attack
@@ -502,12 +502,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-
   // l’effet d’éclair
 
-  function triggerFlashEffect() {
+  function triggerFlashEffect(color = "rgba(255, 255, 255, 0.8)") {
     const flash = document.createElement("div");
     flash.classList.add("flash");
+    flash.style.background = color; // Utilisation de la couleur passée en paramètre
     document.body.appendChild(flash);
 
     setTimeout(() => {
@@ -518,8 +518,8 @@ document.addEventListener("DOMContentLoaded", () => {
   init();
 
   // listener pour bouton des règles du jeu
-document.getElementById("rules-btn").addEventListener("click", () => {
-  let rulesModal = new bootstrap.Modal(document.getElementById("rulesModal"));
-  rulesModal.show();
-});
+  document.getElementById("rules-btn").addEventListener("click", () => {
+    let rulesModal = new bootstrap.Modal(document.getElementById("rulesModal"));
+    rulesModal.show();
+  });
 });
