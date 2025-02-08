@@ -72,18 +72,33 @@ document.addEventListener('DOMContentLoaded', () => {
     gameState.treasure.x = pos.x;
     gameState.treasure.y = pos.y;
 
-    // Placement d'un nombre aléatoire de créatures (entre 10 et 50)
-    const creatureCount = Math.floor(Math.random() * 41) + 10;
-    for (let i = 0; i < creatureCount && positions.length > 0; i++) {
-      pos = positions.shift();
-      const creature = {
-        x: pos.x,
-        y: pos.y,
-        hp: Math.floor(Math.random() * 21) + 10,     // HP entre 10 et 30
-        attack: Math.floor(Math.random() * 11) + 5     // Attaque entre 5 et 15
-      };
-      gameState.creatures.push(creature);
-    }
+// Types de monstres avec leurs caractéristiques
+const monsterTypes = [
+  { color: "green", minHp: 10, maxHp: 20, minAtk: 5, maxAtk: 10, xp: 1 },  // Vert (facile)
+  { color: "yellow", minHp: 15, maxHp: 25, minAtk: 7, maxAtk: 12, xp: 2 }, // Jaune (moyen)
+  { color: "orange", minHp: 20, maxHp: 30, minAtk: 10, maxAtk: 15, xp: 3 }, // Orange (difficile)
+  { color: "red", minHp: 25, maxHp: 35, minAtk: 12, maxAtk: 18, xp: 4 },   // Rouge (très difficile)
+  { color: "purple", minHp: 30, maxHp: 40, minAtk: 15, maxAtk: 20, xp: 5 } // Violet foncé (extrême)
+];
+
+// Placement des monstres
+const creatureCount = Math.floor(Math.random() * 41) + 10; // Entre 10 et 50 monstres
+for (let i = 0; i < creatureCount && positions.length > 0; i++) {
+  pos = positions.shift();
+
+  // Sélection aléatoire d'un type de monstre
+  const monsterType = monsterTypes[Math.floor(Math.random() * monsterTypes.length)];
+
+  const creature = {
+    x: pos.x,
+    y: pos.y,
+    hp: Math.floor(Math.random() * (monsterType.maxHp - monsterType.minHp + 1)) + monsterType.minHp,
+    attack: Math.floor(Math.random() * (monsterType.maxAtk - monsterType.minAtk + 1)) + monsterType.minAtk,
+    color: monsterType.color,
+    xp: monsterType.xp
+  };
+  gameState.creatures.push(creature);
+}
 
     updateGrid();
     updateStats();
@@ -102,12 +117,29 @@ document.addEventListener('DOMContentLoaded', () => {
     treasureCell.classList.add('treasure');
     treasureCell.textContent = '💰';
 
-    // Affichage des créatures
-    gameState.creatures.forEach(creature => {
-      const creatureCell = getCell(creature.x, creature.y);
-      creatureCell.classList.add('creature');
-      creatureCell.textContent = '👾';
-    });
+// Affichage des créatures avec couleurs
+gameState.creatures.forEach(creature => {
+  const creatureCell = getCell(creature.x, creature.y);
+  creatureCell.classList.add('creature'); // Ajoute la classe générale des monstres
+  
+  // Ajout de la couleur spécifique du monstre
+  creatureCell.style.backgroundColor = getMonsterColor(creature.color);
+  creatureCell.textContent = '👾';
+});
+
+// Fonction pour récupérer la couleur associée au monstre
+function getMonsterColor(type) {
+  const colors = {
+    green: "#4CAF50",
+    yellow: "#FFC107",
+    orange: "#FF9800",
+    red: "#F44336",
+    purple: "#673AB7"
+  };
+  return colors[type] || "#F44336"; // Par défaut, rouge si erreur
+}
+
+
 
     // Affichage du joueur avec un GIF
     const playerCell = getCell(gameState.player.x, gameState.player.y);
@@ -246,12 +278,13 @@ if (creatureIndex !== -1) {
 
 // Si la créature est vaincue
 if (creature.hp <= 0) {
-  addHistory("La créature est vaincue !", "win");
+  addHistory(`La créature (${creature.color}) est vaincue ! Vous gagnez ${creature.xp} XP.`, "win");
   gameState.creatures.splice(creatureIndex, 1);
-  gameState.player.exp += 1;
+  gameState.player.exp += creature.xp; // Donne de l'XP en fonction du type de monstre
   updateStats();
   break;
 }
+
 
     // La créature contre-attaque
     gameState.player.hp -= creature.attack;

@@ -68,7 +68,6 @@ h1 {
 }
 
 .cell.creature {
-  background-color: #f44336;
   color: #fff;
 }
 
@@ -97,6 +96,32 @@ h1 {
   justify-content: center;
   align-items: center;
 }
+
+
+/* ======================================== */
+/*   MOB DESIGNS COLORS     */
+/* ======================================= */
+
+.creature-green {
+  background-color: #4CAF50; /* Vert (facile) */
+}
+
+.creature-yellow {
+  background-color: #FFC107; /* Jaune (moyen) */
+}
+
+.creature-orange {
+  background-color: #FF9800; /* Orange (difficile) */
+}
+
+.creature-red {
+  background-color: #F44336; /* Rouge (très difficile) */
+}
+
+.creature-purple {
+  background-color: #673AB7; /* Violet foncé (extrême) */
+}
+
 
 /* ======================================== */
 /*   ANIMATIONS INTERFACE RENCONTRE MOB     */
