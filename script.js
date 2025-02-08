@@ -31,23 +31,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   
-    // Etat initial du jeu
+    // État initial du jeu
     let gameState = {
       gridSize: gridSize,
       player: { x: 0, y: 0, hp: 100, maxHp: 100, exp: 0, attack: 20 },
       treasure: { x: null, y: null },
-      creatures: [] // chaque créature aura {x, y, hp, attack}
+      creatures: [] // Chaque créature possède { x, y, hp, attack }
     };
   
     // Initialisation de la partie
     function initializeGame() {
-      // Réinitialisation des statistiques
+      // Réinitialisation des statistiques pour une nouvelle partie
       gameState.player.hp = gameState.player.maxHp;
-      gameState.player.exp = 0;
+      gameState.player.exp = 0; // XP remis à zéro à chaque nouvelle partie
       gameState.creatures = [];
       enableControls();
   
-      // Réinitialiser les cellules de la grille
+      // Réinitialisation de l'affichage des cellules
       cells.forEach(cell => {
         cell.className = 'cell';
         cell.textContent = '';
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const creature = {
           x: pos.x,
           y: pos.y,
-          hp: Math.floor(Math.random() * 21) + 10,     // Points de vie entre 10 et 30
+          hp: Math.floor(Math.random() * 21) + 10,     // HP entre 10 et 30
           attack: Math.floor(Math.random() * 11) + 5     // Attaque entre 5 et 15
         };
         gameState.creatures.push(creature);
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Mise à jour de l'affichage de la grille
     function updateGrid() {
-      // On réinitialise toutes les cellules
+      // Réinitialiser toutes les cellules
       cells.forEach(cell => {
         cell.className = 'cell';
         cell.textContent = '';
@@ -116,18 +116,18 @@ document.addEventListener('DOMContentLoaded', () => {
       playerCell.textContent = '🙂';
     }
   
-    // Récupérer une cellule en fonction de ses coordonnées
+    // Récupère une cellule en fonction de ses coordonnées
     function getCell(x, y) {
       return cells.find(cell => Number(cell.dataset.x) === x && Number(cell.dataset.y) === y);
     }
   
-    // Mise à jour des statistiques du joueur
+    // Mise à jour des statistiques du joueur dans le DOM
     function updateStats() {
       playerHpEl.textContent = gameState.player.hp;
       playerExpEl.textContent = gameState.player.exp;
     }
   
-    // Ajoute un message à l'historique
+    // Ajoute un message à l'historique des actions
     function addHistory(message) {
       const li = document.createElement('li');
       li.textContent = message;
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
   
-      // Vérifier la présence d'une créature
+      // Vérifier la présence d'une créature sur la case
       const creatureIndex = gameState.creatures.findIndex(creature =>
         creature.x === gameState.player.x && creature.y === gameState.player.y
       );
@@ -171,26 +171,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const creature = gameState.creatures[creatureIndex];
         addHistory(`Rencontre avec une créature (HP: ${creature.hp}, ATK: ${creature.attack}).`);
   
-        // Combat : comparaison entre la force du joueur et les points de vie de la créature
+        // Combat : si l'attaque du joueur est supérieure ou égale aux HP de la créature
         if (gameState.player.attack >= creature.hp) {
           addHistory("Vous avez vaincu la créature !");
           // Suppression de la créature vaincue
           gameState.creatures.splice(creatureIndex, 1);
           // Le joueur regagne 10 points de vie (sans dépasser le maximum)
           gameState.player.hp = Math.min(gameState.player.maxHp, gameState.player.hp + 10);
+          // Incrémentation de l'XP
           gameState.player.exp += 1;
+          updateStats();
         } else {
           addHistory("La créature résiste et vous attaque !");
           gameState.player.hp -= creature.attack;
           if (gameState.player.hp <= 0) {
             addHistory("Vous êtes mort. La partie va se réinitialiser.");
+            disableControls();
             setTimeout(initializeGame, 2000);
           }
         }
       }
     }
   
-    // Désactive les contrôles en fin de partie (victoire)
+    // Désactive les contrôles (boutons) en fin de partie
     function disableControls() {
       document.getElementById('up-btn').disabled = true;
       document.getElementById('down-btn').disabled = true;
@@ -198,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('right-btn').disabled = true;
     }
   
-    // Réactive les contrôles (lors d'une réinitialisation)
+    // Réactive les contrôles
     function enableControls() {
       document.getElementById('up-btn').disabled = false;
       document.getElementById('down-btn').disabled = false;
