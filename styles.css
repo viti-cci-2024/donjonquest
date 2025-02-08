@@ -225,6 +225,37 @@ h1 {
   background: #900000;
 }
 
+/* ======================================== */
+/* Modale de victoire */
+/* ======================================== */
+
+#winModal .modal-content {
+  background: rgba(30, 30, 30, 0.95);
+  color: white;
+  border: 3px solid gold;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+}
+
+#winModal .modal-header {
+  background: gold;
+  color: black;
+}
+
+#winModal .modal-footer {
+  border-top: none;
+}
+
+#restart-win-btn {
+  background: #28a745;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+#restart-win-btn:hover {
+  background: #218838;
+}
 
 
 /* ======================================== */

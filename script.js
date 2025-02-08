@@ -203,13 +203,13 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-// Mise à jour des statistiques du joueur dans le DOM
-function updateStats() {
-  playerHpEl.textContent = gameState.player.hp;
-  playerExpEl.textContent = gameState.player.exp;
-  document.getElementById("player-attack").textContent = gameState.player.attack;
-}
-
+  // Mise à jour des statistiques du joueur dans le DOM
+  function updateStats() {
+    playerHpEl.textContent = gameState.player.hp;
+    playerExpEl.textContent = gameState.player.exp;
+    document.getElementById("player-attack").textContent =
+      gameState.player.attack;
+  }
 
   /**
    * Ajoute un message à l'historique avec une icône
@@ -302,10 +302,25 @@ function updateStats() {
       gameState.player.x === gameState.treasure.x &&
       gameState.player.y === gameState.treasure.y
     ) {
-      addHistory("Vous avez trouvé le trésor ! Vous gagnez !", "treasure");
+      addHistory("Vous avez trouvé le trésor ! 🏆", "treasure");
       disableControls();
-      return;
+
+      // Afficher la modale de victoire
+      let winModal = new bootstrap.Modal(document.getElementById("winModal"));
+      winModal.show();
+
+      return; // Évite d'exécuter le reste du code
     }
+
+    // Ajoute l'Event Listener UNE SEULE FOIS après le chargement du DOM
+    document.getElementById("restart-win-btn").addEventListener(
+      "click",
+      () => {
+        initializeGame();
+      },
+      { once: true }
+    ); // { once: true } empêche les doublons
+
     // Vérifier si le joueur ramasse une épée
     const swordIndex = gameState.swords.findIndex(
       (sword) =>
