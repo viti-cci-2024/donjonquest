@@ -130,13 +130,22 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    * Ajoute un message à l'historique avec une icône
    * @param {string} message - Le message à afficher.
-   * @param {string} type - Le type d'action (ex. "move", "attack", "damage", "win", "lose", "treasure", "encounter", "info").
+   * @param {string} type - Le type d'action (ex. "move-up", "move-down", "move-left", "move-right", "attack", "damage", "win", "lose", "treasure", "encounter", "info").
    */
   function addHistory(message, type = "info") {
     const li = document.createElement('li');
     let iconHtml = "";
     switch (type) {
-      case "move":
+      case "move-up":
+        iconHtml = '<i class="bi bi-arrow-up"></i> ';
+        break;
+      case "move-down":
+        iconHtml = '<i class="bi bi-arrow-down"></i> ';
+        break;
+      case "move-left":
+        iconHtml = '<i class="bi bi-arrow-left"></i> ';
+        break;
+      case "move-right":
         iconHtml = '<i class="bi bi-arrow-right"></i> ';
         break;
       case "attack":
@@ -175,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     historyList.prepend(separator);
   }
 
-  // Gère le déplacement du joueur
+  // Gère le déplacement du joueur avec icône adaptée selon la direction
   function movePlayer(dx, dy) {
     const newX = gameState.player.x + dx;
     const newY = gameState.player.y + dy;
@@ -187,7 +196,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     gameState.player.x = newX;
     gameState.player.y = newY;
-    addHistory(`Déplacement vers (${newX}, ${newY}).`, "move");
+
+    // Détermination de l'icône en fonction de la direction
+    let moveType = "move";
+    if (dx === 0 && dy === -1) moveType = "move-up";
+    else if (dx === 0 && dy === 1) moveType = "move-down";
+    else if (dx === -1 && dy === 0) moveType = "move-left";
+    else if (dx === 1 && dy === 0) moveType = "move-right";
+
+    addHistory(`Déplacement vers (${newX}, ${newY}).`, moveType);
 
     checkCell();
     updateGrid();
