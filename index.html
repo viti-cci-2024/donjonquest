@@ -14,9 +14,12 @@
 
   <div class="d-flex justify-content-center align-items-center mb-3 header-container">
     <h1 class="me-3">Chasse au Trésor</h1>
+    <img id="timer" src="src/sablier.gif" alt="Temps restant" class="timer-gif me-3"><p id="timer-text"></p>
     <p class="highscore-text me-3">Highscore : <span id="highscore">0</span> ⭐</p>
     <button id="rules-btn" class="btn-rules"><i class="bi bi-file-text"></i></button>
   </div>
+  
+  
   
   
     <!-- Zone de jeu : grille et historique -->
@@ -101,6 +104,24 @@
     </div>
   </div>
 </div>
+
+<!-- Modale Temps Écoulé -->
+<div class="modal fade" id="timeUpModal" tabindex="-1" aria-labelledby="timeUpModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="timeUpModalLabel">⏳ Temps écoulé !</h5>
+      </div>
+      <div class="modal-body">
+        <p>Le temps est écoulé, vous avez perdu ! Essayez encore !</p>
+      </div>
+      <div class="modal-footer">
+        <button id="restart-time-btn" class="btn btn-danger" data-bs-dismiss="modal">Rejouer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Modale des Règles du Jeu -->
 <div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -109,13 +130,25 @@
         <h5 class="modal-title" id="rulesModalLabel">📜 Règles du Jeu</h5>
       </div>
       <div class="modal-body">
-        <p>Bienvenue dans la chasse au trésor ! 🏆</p>
+        <p>Bienvenue dans la chasse aux monstres ! 💰</p>
         <ul>
-          <li>💰 Trouvez le trésor pour gagner.</li>
+          
+          <li> Vous avez seulement 60 secondes</li>
+          <li> à cause de l'air putride du donjon</li>
+          <li> pour gagner un maximum d'XP</li>
+          <li>  </li>
+          <li>💰 Le trésor vous fera terminer la partie.</li>
+          <li> mais le véritable enjeu est de tuer</li>
+          <li> un maximum de créatures pour gagner !</li>
+          <li>  </li>
           <li>⚔️ Ramassez des épées pour augmenter votre attaque.</li>
           <li>❤️ Buvez des potions pour récupérer des PV.</li>
           <li>👹 Combattez des monstres et gagnez de l'expérience.</li>
           <li>🕹️ Utilisez les boutons pour vous déplacer.</li>
+          <li>  </li>
+          <li>  </li>
+          <li> Fais le meilleur score...</li>
+          <li> et bonne chance à toi !</li>
         </ul>
       </div>
       <div class="modal-footer">

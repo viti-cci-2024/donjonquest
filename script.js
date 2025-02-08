@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const gridSize = 10;
   let cells = [];
+  let gameTimer;
+  let timeLeft = 60; // Temps initial en secondes
+
 
   // Création de la grille 10x10
   function createGrid() {
@@ -39,9 +42,34 @@ document.addEventListener("DOMContentLoaded", () => {
     treasure: { x: null, y: null },
     creatures: [], // Chaque créature possède { x, y, hp, attack }
   };
+  
+  // Démarre le temps
+  function startTimer() {
+    timeLeft = 60; // Réinitialise le temps
+    gameTimer = setInterval(() => {
+        timeLeft--;
+
+        // Si le temps est écoulé, afficher la modale et stopper le jeu
+        if (timeLeft <= 0) {
+            clearInterval(gameTimer);
+            disableControls();
+            addHistory("⏳ Temps écoulé ! Partie terminée.", "lose");
+
+            // Afficher la modale de fin de temps
+            let timeUpModal = new bootstrap.Modal(document.getElementById("timeUpModal"));
+            timeUpModal.show();
+
+            // Relancer la partie au clic sur "Rejouer"
+            document.getElementById("restart-time-btn").addEventListener("click", () => {
+                initializeGame();
+            });
+        }
+    }, 1000); // Met à jour chaque seconde
+}
 
   // Initialisation de la partie
   function initializeGame() {
+    clearInterval(gameTimer); // Stoppe tout timer précédent
     gameState.player.hp = gameState.player.maxHp;
     gameState.player.exp = 0;
     gameState.creatures = [];
@@ -133,6 +161,10 @@ document.addEventListener("DOMContentLoaded", () => {
     updateGrid();
     updateStats();
     addHistory("La partie commence !", "info");
+    
+  // Démarrer le timer
+  startTimer();
+    
   }
 
   // Mise à jour de l'affichage de la grille
