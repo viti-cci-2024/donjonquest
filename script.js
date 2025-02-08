@@ -491,7 +491,17 @@ document.addEventListener("DOMContentLoaded", () => {
   function init() {
     createGrid();
     initializeGame();
+
+    // Vérifie si c'est le premier lancement du jeu
+    if (!sessionStorage.getItem("rulesShown")) {
+      let rulesModal = new bootstrap.Modal(
+        document.getElementById("rulesModal")
+      );
+      rulesModal.show();
+      sessionStorage.setItem("rulesShown", "true"); // Marque que les règles ont été affichées
+    }
   }
+
 
   // l’effet d’éclair
 
@@ -506,4 +516,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   init();
+
+  // listener pour bouton des règles du jeu
+document.getElementById("rules-btn").addEventListener("click", () => {
+  let rulesModal = new bootstrap.Modal(document.getElementById("rulesModal"));
+  rulesModal.show();
+});
 });

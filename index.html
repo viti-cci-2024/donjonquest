@@ -13,7 +13,10 @@
 <body>
 
   <div class="game-container">
-    <h1>Chasse au Trésor</h1>
+    <div class="d-flex align-items-center justify-content-center">
+      <h1 class="me-3">Chasse au Trésor</h1>
+      <button id="rules-btn" class="btn-rules"><i class="bi bi-file-text"></i></button>
+    </div>
   
     <!-- Zone de jeu : grille et historique -->
     <div class="container-fluid">
@@ -97,6 +100,30 @@
     </div>
   </div>
 </div>
+<!-- Modale des Règles du Jeu -->
+<div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rulesModalLabel">📜 Règles du Jeu</h5>
+      </div>
+      <div class="modal-body">
+        <p>Bienvenue dans la chasse au trésor ! 🏆</p>
+        <ul>
+          <li>💰 Trouvez le trésor pour gagner.</li>
+          <li>⚔️ Ramassez des épées pour augmenter votre attaque.</li>
+          <li>❤️ Buvez des potions pour récupérer des PV.</li>
+          <li>👹 Combattez des monstres et gagnez de l'expérience.</li>
+          <li>🕹️ Utilisez les boutons pour vous déplacer.</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button id="close-rules-btn" class="btn btn-primary" data-bs-dismiss="modal">Yosh !</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   <script src="script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
