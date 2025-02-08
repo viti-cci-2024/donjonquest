@@ -75,11 +75,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Types de monstres avec leurs caractéristiques
     const monsterTypes = [
-      { color: "green", minHp: 10, maxHp: 20, minAtk: 5, maxAtk: 10, xp: 1 }, // Vert (facile)
-      { color: "yellow", minHp: 15, maxHp: 25, minAtk: 7, maxAtk: 12, xp: 2 }, // Jaune (moyen)
-      { color: "orange", minHp: 20, maxHp: 30, minAtk: 10, maxAtk: 15, xp: 3 }, // Orange (difficile)
-      { color: "red", minHp: 25, maxHp: 35, minAtk: 12, maxAtk: 18, xp: 4 }, // Rouge (très difficile)
-      { color: "purple", minHp: 30, maxHp: 40, minAtk: 15, maxAtk: 20, xp: 5 }, // Violet foncé (extrême)
+      { color: "green", minHp: 10, maxHp: 20, minAtk: 5, maxAtk: 10, xp: 1 }, // Vert (facile) - 1 XP
+      { color: "yellow", minHp: 15, maxHp: 25, minAtk: 7, maxAtk: 12, xp: 2 }, // Jaune (moyen) - 2 XP
+      { color: "orange", minHp: 20, maxHp: 30, minAtk: 10, maxAtk: 15, xp: 3 }, // Orange (difficile) - 3 XP
+      { color: "red", minHp: 25, maxHp: 35, minAtk: 12, maxAtk: 18, xp: 4 }, // Rouge (très difficile) - 4 XP
+      { color: "purple", minHp: 30, maxHp: 40, minAtk: 15, maxAtk: 20, xp: 5 }, // Violet foncé (extrême) - 5 XP
     ];
 
     // Placement des monstres
@@ -108,6 +108,16 @@ document.addEventListener("DOMContentLoaded", () => {
       gameState.creatures.push(creature);
     }
 
+    // Générer entre 1 et 3 épées
+    const swordCount = Math.floor(Math.random() * 3) + 1;
+    gameState.swords = [];
+
+    for (let i = 0; i < swordCount && positions.length > 0; i++) {
+      let pos = positions.shift();
+      gameState.swords.push({ x: pos.x, y: pos.y });
+    }
+
+    // Mise à jour de l'affichage
     updateGrid();
     updateStats();
     addHistory("La partie commence !", "info");
@@ -126,6 +136,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const treasureCell = getCell(gameState.treasure.x, gameState.treasure.y);
     treasureCell.classList.add("treasure");
     treasureCell.textContent = "💰";
+
+    // Affichage des épées sur la carte
+    gameState.swords.forEach((sword) => {
+      const swordCell = getCell(sword.x, sword.y);
+      swordCell.classList.add("sword");
+      swordCell.innerHTML =
+        '<img src="src/sword.gif" alt="Épée" class="sword-gif">';
+    });
 
     // Affichage des créatures avec les GIFs animés
     gameState.creatures.forEach((creature) => {
@@ -185,12 +203,13 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  // Mise à jour des statistiques du joueur dans le DOM
-  function updateStats() {
-    playerHpEl.textContent = gameState.player.hp;
-    playerExpEl.textContent = gameState.player.exp;
-    // playerAttackEl.textContent = gameState.player.attack; // Décommentez si besoin
-  }
+// Mise à jour des statistiques du joueur dans le DOM
+function updateStats() {
+  playerHpEl.textContent = gameState.player.hp;
+  playerExpEl.textContent = gameState.player.exp;
+  document.getElementById("player-attack").textContent = gameState.player.attack;
+}
+
 
   /**
    * Ajoute un message à l'historique avec une icône
@@ -286,6 +305,21 @@ document.addEventListener("DOMContentLoaded", () => {
       addHistory("Vous avez trouvé le trésor ! Vous gagnez !", "treasure");
       disableControls();
       return;
+    }
+    // Vérifier si le joueur ramasse une épée
+    const swordIndex = gameState.swords.findIndex(
+      (sword) =>
+        sword.x === gameState.player.x && sword.y === gameState.player.y
+    );
+
+    if (swordIndex !== -1) {
+      gameState.swords.splice(swordIndex, 1); // Retire l'épée de la carte
+      gameState.player.attack += 2; // Augmente la force du joueur
+      addHistory(
+        "Vous avez trouvé une épée vorpaline ! ⚔️ Votre attaque augmente de 2.",
+        "win"
+      );
+      updateStats(); // Mise à jour des stats
     }
 
     // Vérifier la présence d'une créature sur la case
