@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const historyList = document.getElementById("history-list");
   const playerHpEl = document.getElementById("player-hp");
   const playerExpEl = document.getElementById("player-exp");
-  // const playerAttackEl = document.getElementById('player-attack'); // Décommentez si vous affichez la force du joueur
+  // const playerAttackEl = document.getElementById('player-attack'); // Décommenter pour afficher la force du joueur
 
   const gridSize = 10;
   let cells = [];
@@ -186,10 +186,18 @@ document.addEventListener("DOMContentLoaded", () => {
       cell.style.backgroundColor = "";
     });
 
-    // Affichage du trésor
-    const treasureCell = getCell(gameState.treasure.x, gameState.treasure.y);
-    treasureCell.classList.add("treasure");
-    treasureCell.textContent = "💰";
+// Affichage du trésor
+const treasureCell = getCell(gameState.treasure.x, gameState.treasure.y);
+treasureCell.classList.add("treasure");
+
+// Créer une balise <img> pour le trésor animé
+const treasureImage = document.createElement('img');
+treasureImage.src = 'src/tresor.gif'; // Remplace ici par le chemin correct de ton gif
+treasureImage.classList.add('treasure-image'); // Classe optionnelle pour styliser l'image
+
+// Ajouter l'image dans la cellule
+treasureCell.innerHTML = '';  // Vide le contenu précédent de la cellule (le texte)
+treasureCell.appendChild(treasureImage); // Ajoute l'image du trésor
 
     // Affichage des épées sur la carte
     gameState.swords.forEach((sword) => {
@@ -377,20 +385,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Vérifie le contenu de la case sur laquelle se trouve le joueur
   function checkCell() {
-    // Si le joueur trouve le trésor
-    if (
-      gameState.player.x === gameState.treasure.x &&
-      gameState.player.y === gameState.treasure.y
-    ) {
-      addHistory("Vous avez trouvé le trésor ! 🏆", "treasure");
-      disableControls();
+// Si le joueur trouve le trésor
+if (
+  gameState.player.x === gameState.treasure.x &&
+  gameState.player.y === gameState.treasure.y
+) {
+  addHistory("Vous avez trouvé le trésor ! 🏆", "treasure");
+  disableControls();
 
-      // Afficher la modale de victoire
-      let winModal = new bootstrap.Modal(document.getElementById("winModal"));
-      winModal.show();
+  // Arrêter le timer
+  clearInterval(gameTimer);  // stop timer qaund trésor est trouvé
 
-      return; // Évite d'exécuter le reste du code
-    }
+  // Afficher la modale de victoire
+  let winModal = new bootstrap.Modal(document.getElementById("winModal"));
+  winModal.show();
+
+  return; // Évite d'exécuter le reste du code
+}
 
     // Ajoute l'Event Listener UNE SEULE FOIS après le chargement du DOM
     document.getElementById("restart-win-btn").addEventListener(
@@ -414,7 +425,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Vous avez trouvé une épée vorpaline ! ⚔️ Votre attaque augmente de 2.",
         "win"
       );
-      updateStats(); // Mise à jour des stats
+      updateStats(); // Mise à jour stats
     }
 
     // Vérifier si le joueur ramasse une potion
