@@ -121,10 +121,10 @@ document.addEventListener('DOMContentLoaded', () => {
       return cells.find(cell => Number(cell.dataset.x) === x && Number(cell.dataset.y) === y);
     }
   
-    // Mise à jour des statistiques du joueur dans le DOM
     function updateStats() {
       playerHpEl.textContent = gameState.player.hp;
       playerExpEl.textContent = gameState.player.exp;
+      document.getElementById('player-attack').textContent = gameState.player.attack;
     }
   
     // Ajoute un message à l'historique des actions

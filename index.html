@@ -12,8 +12,19 @@
     <div class="stats">
       <p>Points de vie : <span id="player-hp"></span></p>
       <p>Expérience : <span id="player-exp"></span></p>
+      <p>Force : <span id="player-attack"></span></p>
     </div>
-    <div id="grid" class="grid"></div>
+    
+    <!-- Zone de jeu : grille et historique -->
+    <div class="game-area">
+      <div id="grid" class="grid"></div>
+      <div id="history" class="history">
+        <h2>Historique des actions</h2>
+        <ul id="history-list"></ul>
+      </div>
+    </div>
+    
+    <!-- Boutons de déplacement -->
     <div class="controls">
       <button id="up-btn">Haut</button>
       <div class="horizontal-controls">
@@ -21,10 +32,6 @@
         <button id="down-btn">Bas</button>
         <button id="right-btn">Droite</button>
       </div>
-    </div>
-    <div id="history" class="history">
-      <h2>Historique des actions</h2>
-      <ul id="history-list"></ul>
     </div>
   </div>
   <script src="script.js"></script>

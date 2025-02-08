@@ -1,90 +1,141 @@
 /* styles.css */
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+}
+
+.game-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  color: #333;
+}
+
+.stats {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+/* Zone de jeu regroupant la grille et l'historique */
+.game-area {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Style de la grille */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 40px);
+  grid-template-rows: repeat(10, 40px);
+  gap: 2px;
+  background-color: #333;
+  padding: 2px;
+}
+
+/* Style des cases de la grille */
+.cell {
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  position: relative;
+}
+
+.cell.player {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.cell.treasure {
+  background-color: gold;
+  color: #fff;
+}
+
+.cell.creature {
+  background-color: #f44336;
+  color: #fff;
+}
+
+/* Style de l'historique */
+.history {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ccc;
+  overflow-y: auto;
+}
+
+/* Style des contrôles */
+.controls {
+  margin-bottom: 20px;
+}
+
+.controls button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.horizontal-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =================== */
+/* RÉSPONSIVE DESIGN   */
+/* =================== */
+
+/* Pour les écrans de tablette et desktop */
+@media (min-width: 768px) {
+  .game-area {
+    flex-direction: row;
+    align-items: flex-start;
   }
   
-  .game-container {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-  }
   
-  h1 {
-    color: #333;
+  /* L'historique occupe une largeur fixe à droite */
+  .history {
+    width: 300px;
+    max-height: 420px; /* pour aligner avec la hauteur de la grille */
   }
-  
-  .stats {
-    margin-bottom: 20px;
-    font-size: 18px;
-  }
-  
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(10, 40px);
-    grid-template-rows: repeat(10, 40px);
-    gap: 2px;
-    margin: 0 auto 20px;
-    background-color: #333;
-    padding: 2px;
-    width: fit-content;
-  }
-  
-  .cell {
-    width: 40px;
-    height: 40px;
-    background-color: #fff;
-    display: flex;
+}
+
+/* Pour les écrans mobiles */
+@media (max-width: 767px) {
+  .game-area {
+    flex-direction: column;  /* Empile la grille et l'historique verticalement */
     align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    position: relative;
   }
   
-  /* Le joueur est affiché en vert */
-  .cell.player {
-    background-color: #4caf50;
-    color: #fff;
+  /* L'historique prend toute la largeur disponible et une hauteur réduite pour un bon ajustement vertical */
+  .history {
+    width: 100%;
+    max-height: 200px;
+    margin-top: 10px;
   }
   
-  /* Le trésor est mis en valeur par la couleur or */
-  .cell.treasure {
-    background-color: gold;
-    color: #fff;
-  }
-  
-  /* Les créatures sont affichées en rouge */
-  .cell.creature {
-    background-color: #f44336;
-    color: #fff;
-  }
-  
+  /* Ajustement des contrôles pour une disposition verticale */
   .controls {
-    margin-bottom: 20px;
-  }
-  
-  .controls button {
-    padding: 10px 20px;
-    margin: 5px;
-    font-size: 16px;
-    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .horizontal-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: row;
+    margin-top: 10px;
   }
-  
-  .history {
-    text-align: left;
-    background-color: #fff;
-    padding: 10px;
-    border: 1px solid #ccc;
-    max-height: 200px;
-    overflow-y: auto;
-  }
-  
+}
