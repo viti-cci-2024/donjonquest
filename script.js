@@ -47,10 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
     gameState.creatures = [];
     enableControls();
 
-    // Réinitialisation des cellules
+    // Réinitialisation complète des cellules
     cells.forEach(cell => {
       cell.className = 'cell';
       cell.textContent = '';
+      cell.style.backgroundColor = ""; // Réinitialise la couleur de toutes les cases
     });
 
     // Création d'un tableau de toutes les positions possibles
@@ -110,6 +111,7 @@ for (let i = 0; i < creatureCount && positions.length > 0; i++) {
     cells.forEach(cell => {
       cell.className = 'cell';
       cell.textContent = '';
+      cell.style.backgroundColor = ""; // Réinitialise la couleur de fond
     });
 
     // Affichage du trésor
