@@ -54,6 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
       cell.style.backgroundColor = ""; // Réinitialise la couleur de toutes les cases
     });
 
+    // Réinitialisation complète de l'historique
+    historyList.innerHTML = "";
+
     // Création d'un tableau de toutes les positions possibles
     let positions = [];
     for (let y = 0; y < gridSize; y++) {
@@ -226,6 +229,18 @@ document.addEventListener("DOMContentLoaded", () => {
     playerExpEl.textContent = gameState.player.exp;
     document.getElementById("player-attack").textContent =
       gameState.player.attack;
+    updateHighscore(); // Met à jour le highscore après chaque gain d'XP
+  }
+
+  // Fonction session storage du highscore
+  function updateHighscore() {
+    let currentXP = gameState.player.exp;
+    let storedHighscore = sessionStorage.getItem("highscore") || 0;
+
+    if (currentXP > storedHighscore) {
+      sessionStorage.setItem("highscore", currentXP);
+      document.getElementById("highscore").textContent = currentXP;
+    }
   }
 
   /**
@@ -236,52 +251,52 @@ document.addEventListener("DOMContentLoaded", () => {
   function addHistory(message, type = "info") {
     const li = document.createElement("li");
     let iconHtml = "";
-    
+
     switch (type) {
-        case "move-up":
-            iconHtml = '<i class="bi bi-arrow-up"></i> ';
-            break;
-        case "move-down":
-            iconHtml = '<i class="bi bi-arrow-down"></i> ';
-            break;
-        case "move-left":
-            iconHtml = '<i class="bi bi-arrow-left"></i> ';
-            break;
-        case "move-right":
-            iconHtml = '<i class="bi bi-arrow-right"></i> ';
-            break;
-        case "attack":
-            iconHtml = '<i class="bi bi-lightning"></i> ';
-            li.style.color = "blue"; // Change le texte en rouge quand le joueur attaque
-            break;
-        case "damage":
-            iconHtml = '<i class="bi bi-shield-fill-exclamation"></i> ';
-            li.style.color = "red"; // Change le texte en rouge quand le joueur prend des dégâts
-            break;
-        case "win":
-            iconHtml = '<i class="bi bi-trophy"></i> ';
-            li.style.color = "darkgreen"; // Change le texte en vert foncé quand le joueur gagne un combat
-            break;
-        case "lose":
-            iconHtml = '<i class="bi bi-emoji-dizzy"></i> ';
-            li.style.color = "red"; // Rouge aussi pour la mort du joueur
-            break;
-        case "treasure":
-            iconHtml = '<i class="bi bi-gem"></i> ';
-            break;
-        case "encounter":
-            iconHtml = '<i class="bi bi-bug"></i> ';
-            break;
-        case "info":
-        default:
-            iconHtml = '<i class="bi bi-info-circle"></i> ';
-            break;
+      case "move-up":
+        iconHtml = '<i class="bi bi-arrow-up"></i> ';
+        break;
+      case "move-down":
+        iconHtml = '<i class="bi bi-arrow-down"></i> ';
+        break;
+      case "move-left":
+        iconHtml = '<i class="bi bi-arrow-left"></i> ';
+        break;
+      case "move-right":
+        iconHtml = '<i class="bi bi-arrow-right"></i> ';
+        break;
+      case "attack":
+        iconHtml = '<i class="bi bi-lightning"></i> ';
+        li.style.color = "blue"; // Change le texte en rouge quand le joueur attaque
+        break;
+      case "damage":
+        iconHtml = '<i class="bi bi-shield-fill-exclamation"></i> ';
+        li.style.color = "red"; // Change le texte en rouge quand le joueur prend des dégâts
+        break;
+      case "win":
+        iconHtml = '<i class="bi bi-trophy"></i> ';
+        li.style.color = "darkgreen"; // Change le texte en vert foncé quand le joueur gagne un combat
+        break;
+      case "lose":
+        iconHtml = '<i class="bi bi-emoji-dizzy"></i> ';
+        li.style.color = "red"; // Rouge aussi pour la mort du joueur
+        break;
+      case "treasure":
+        iconHtml = '<i class="bi bi-gem"></i> ';
+        break;
+      case "encounter":
+        iconHtml = '<i class="bi bi-bug"></i> ';
+        break;
+      case "info":
+      default:
+        iconHtml = '<i class="bi bi-info-circle"></i> ';
+        break;
     }
 
     li.innerHTML = iconHtml + message;
     li.style.marginBottom = "10px"; // Espacement entre les messages
     historyList.prepend(li);
-}
+  }
 
   // Ajoute un séparateur dans l'historique pour grouper les actions
   function addHistorySeparator() {
@@ -522,6 +537,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   init();
+  document.getElementById("highscore").textContent =
+    sessionStorage.getItem("highscore") || 0;
 
   // listener pour bouton des règles du jeu
   document.getElementById("rules-btn").addEventListener("click", () => {

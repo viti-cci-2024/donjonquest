@@ -35,6 +35,12 @@ h1 {
   gap: 20px;
 }
 
+.highscore-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: gold;
+}
+
 /* ======================================== */
 /*  Grille et Historique */
 /* ======================================== */
