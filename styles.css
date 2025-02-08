@@ -107,6 +107,44 @@ h1 {
   justify-content: center;
   align-items: center;
 }
+/* ======================================== */
+/* Styles des boutons de déplacement */
+/* ======================================= */
+
+.btn-move {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #4a90e2, #357ABD);
+  border: 3px solid #255A9B;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease-in-out;
+  outline: none;
+}
+
+/* Effet de relief au survol */
+.btn-move:hover {
+  background: linear-gradient(to bottom, #5aa9f3, #357ABD);
+  box-shadow: 0px 0px 15px rgba(74, 144, 226, 0.7);
+  transform: scale(1.1);
+}
+
+/* Effet d'enfoncement au clic */
+.btn-move:active {
+  transform: scale(0.95);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Icônes des boutons */
+.btn-move i {
+  font-size: 28px;
+}
+
 
 
 /* ======================================== */
