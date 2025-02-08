@@ -69,7 +69,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialisation de la partie
   function initializeGame() {
-    clearInterval(gameTimer); // Stoppe tout timer précédent
+      // Arrête le timer en cours (s'il existe)
+  clearInterval(gameTimer);
+
+  // Réinitialisation du timer :
+  timeLeft = 60;
+  document.getElementById("timer-text").textContent = timeLeft + " sec";
+
+  // Forcer le redémarrage du GIF en modifiant son src avec un paramètre aléatoire
+  const timerImg = document.getElementById("timer");
+  timerImg.src = "src/sablier.gif?" + new Date().getTime();
+  
     gameState.player.hp = gameState.player.maxHp;
     gameState.player.exp = 0;
     gameState.creatures = [];
