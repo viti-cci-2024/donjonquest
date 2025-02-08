@@ -160,11 +160,11 @@ for (let i = 0; i < creatureCount && positions.length > 0; i++) {
     // Fonction locale pour récupérer la couleur associée au monstre
     function getMonsterColor(type) {
       const colors = {
-        green: "#4CAF50",
-        yellow: "#FFC107",
-        orange: "#FF9800",
-        red: "#F44336",
-        purple: "#673AB7"
+        green: "#fff",
+        yellow: "#fff",
+        orange: "#fff",
+        red: "#fff",
+        purple: "#fff"
       };
       return colors[type] || "#F44336"; // Par défaut, rouge
     }

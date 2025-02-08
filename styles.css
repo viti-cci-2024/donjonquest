@@ -53,10 +53,17 @@ h1 {
   position: relative;
 }
 
+@keyframes highlight {
+  0% { background-color: white; }
+  50% { background-color: #03588e; } 
+  100% { background-color: white; }
+}
+
 .cell.player {
-  background-color: #4caf50;
+  animation: highlight 2s infinite ease-in-out;
   color: #fff;
 }
+
 .player-gif {
   width: 100%;  /* Remplit complètement la cellule */
   height: 100%; /* Ajuste la hauteur automatiquement */
