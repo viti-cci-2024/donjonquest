@@ -81,42 +81,56 @@ h1 {
   object-fit: contain;
 }
 
+/* ======================================== */
+/*  Aura torche player */
+/* ======================================== */
 @keyframes aura-animation {
   0% {
     box-shadow: 
-      0 0 8px rgba(0, 255, 0, 0.5),    
-      0 0 8px rgba(0, 255, 0, 0.5),    
-      0 0 8px rgba(0, 255, 0, 0.5),    
-      0 0 8px rgba(0, 255, 0, 0.5);    
+      0 0 15px rgba(255, 255, 0, 0.6),  
+      0 0 30px rgba(255, 255, 0, 0.4),  
+      0 0 20px rgba(255, 140, 0, 0.5), 
+      0 0 30px rgba(255, 140, 0, 0.3); 
   }
   50% {
     box-shadow: 
-      0 0 15px rgba(0, 0, 255, 0.6),    
-      0 0 15px rgba(0, 0, 255, 0.6),    
-      0 0 15px rgba(0, 0, 255, 0.6),    
-      0 0 15px rgba(0, 0, 255, 0.6);    
+      0 0 20px rgba(255, 255, 0, 0.8),  
+      0 0 40px rgba(255, 255, 0, 0.6),
+      0 0 25px rgba(255, 140, 0, 0.7), 
+      0 0 45px rgba(255, 140, 0, 0.5);
   }
   100% {
     box-shadow: 
-      0 0 8px rgba(0, 255, 0, 0.5),    
-      0 0 8px rgba(0, 255, 0, 0.5),    
-      0 0 8px rgba(0, 255, 0, 0.5),    
-      0 0 8px rgba(0, 255, 0, 0.5);    
+      0 0 15px rgba(255, 255, 0, 0.6),
+      0 0 30px rgba(255, 255, 0, 0.4),
+      0 0 20px rgba(255, 140, 0, 0.5),
+      0 0 30px rgba(255, 140, 0, 0.3);
   }
 }
 
 .player {
   position: relative;
-  animation: aura-animation 1.5s ease-in-out infinite;
+  animation: aura-animation 2s ease-in-out infinite;
   z-index: 10;
 }
 
+.player::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;  /* réglage taille aura torche */
+  height: 120%;  /* réglage taille aura torche */
+  background: rgba(255, 255, 0, 0.5);  /* Jaune plus vif pour l'aura */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);  /* Centrer aura torche autour du joueur */
+  animation: aura-animation 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
 
-
-
-
-
-
+/* ======================================== */
+/* ======================================== */
 
 /* Historique des actions */
 .history {
