@@ -109,11 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
       creatureCell.textContent = '👾';
     });
 
-    // Affichage du joueur
+    // Affichage du joueur avec un GIF
     const playerCell = getCell(gameState.player.x, gameState.player.y);
-    playerCell.classList.add('player');
-    playerCell.textContent = '🙂';
-  }
+      playerCell.classList.add('player');
+      playerCell.innerHTML = '<img src="../src/joueur.gif" alt="Joueur" class="player-gif">';
+    }
 
   // Récupérer une cellule en fonction de ses coordonnées
   function getCell(x, y) {

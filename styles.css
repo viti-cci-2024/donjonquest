@@ -57,7 +57,11 @@ h1 {
   background-color: #4caf50;
   color: #fff;
 }
-
+.player-gif {
+  width: 100%;  /* Remplit complètement la cellule */
+  height: 100%; /* Ajuste la hauteur automatiquement */
+  object-fit: contain; /* Garde les proportions du GIF */
+}
 .cell.treasure {
   background-color: gold;
   color: #fff;
@@ -93,6 +97,45 @@ h1 {
   justify-content: center;
   align-items: center;
 }
+
+/* ======================================== */
+/*   ANIMATIONS INTERFACE RENCONTRE MOB     */
+/* ======================================= */
+
+/* Effet de tremblement de la grille */
+@keyframes shake {
+  0% { transform: translate(0px, 0px); }
+  20% { transform: translate(-5px, 5px); }
+  40% { transform: translate(5px, -5px); }
+  60% { transform: translate(-5px, 5px); }
+  80% { transform: translate(5px, -5px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Effet de flash sur l'écran */
+.flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 9999;
+  pointer-events: none;
+  animation: flash 0.3s ease-out;
+}
+
+@keyframes flash {
+  0% { opacity: 0.8; }
+  50% { opacity: 0.4; }
+  100% { opacity: 0; }
+}
+
+
 
 /* =================== */
 /* RÉSPONSIVE DESIGN   */
