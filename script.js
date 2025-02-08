@@ -117,6 +117,15 @@ document.addEventListener("DOMContentLoaded", () => {
       gameState.swords.push({ x: pos.x, y: pos.y });
     }
 
+    // Générer entre 1 et 3 potions
+    const potionCount = Math.floor(Math.random() * 3) + 1;
+    gameState.potions = [];
+
+    for (let i = 0; i < potionCount && positions.length > 0; i++) {
+      let pos = positions.shift();
+      gameState.potions.push({ x: pos.x, y: pos.y });
+    }
+
     // Mise à jour de l'affichage
     updateGrid();
     updateStats();
@@ -143,6 +152,14 @@ document.addEventListener("DOMContentLoaded", () => {
       swordCell.classList.add("sword");
       swordCell.innerHTML =
         '<img src="src/sword.gif" alt="Épée" class="sword-gif">';
+    });
+
+    // Affichage des potions sur la carte
+    gameState.potions.forEach((potion) => {
+      const potionCell = getCell(potion.x, potion.y);
+      potionCell.classList.add("potion");
+      potionCell.innerHTML =
+        '<img src="src/potion.gif" alt="Potion de soin" class="potion-gif">';
     });
 
     // Affichage des créatures avec les GIFs animés
@@ -334,6 +351,25 @@ document.addEventListener("DOMContentLoaded", () => {
         "Vous avez trouvé une épée vorpaline ! ⚔️ Votre attaque augmente de 2.",
         "win"
       );
+      updateStats(); // Mise à jour des stats
+    }
+
+    // Vérifier si le joueur ramasse une potion
+    const potionIndex = gameState.potions.findIndex(
+      (potion) =>
+        potion.x === gameState.player.x && potion.y === gameState.player.y
+    );
+
+    if (potionIndex !== -1) {
+      gameState.potions.splice(potionIndex, 1); // Retire la potion de la carte
+
+      // Ajoute 5 PV sans dépasser le maximum
+      gameState.player.hp = Math.min(
+        gameState.player.hp + 5,
+        gameState.player.maxHp
+      );
+
+      addHistory("Vous avez bu une potion ! ❤️ +5 PV", "win");
       updateStats(); // Mise à jour des stats
     }
 

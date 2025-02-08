@@ -93,6 +93,12 @@ h1 {
   width: 300px;
 }
 
+.potion-gif {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 /* ======================================== */
 /*  Effets visuels (Tremblement + Flash) */
 /* ======================================== */
