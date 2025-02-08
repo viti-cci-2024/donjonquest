@@ -244,15 +244,14 @@ if (creatureIndex !== -1) {
     creature.hp -= gameState.player.attack;
     addHistory(`Vous attaquez la créature et lui infligez ${gameState.player.attack} dégâts. (HP restant de la créature: ${Math.max(creature.hp, 0)})`, "attack");
 
-    // Si la créature est vaincue
-    if (creature.hp <= 0) {
-      addHistory("La créature est vaincue !", "win");
-      gameState.creatures.splice(creatureIndex, 1);
-      gameState.player.hp = Math.min(gameState.player.maxHp, gameState.player.hp + 10);
-      gameState.player.exp += 1;
-      updateStats();
-      break;
-    }
+// Si la créature est vaincue
+if (creature.hp <= 0) {
+  addHistory("La créature est vaincue !", "win");
+  gameState.creatures.splice(creatureIndex, 1);
+  gameState.player.exp += 1;
+  updateStats();
+  break;
+}
 
     // La créature contre-attaque
     gameState.player.hp -= creature.attack;
