@@ -108,46 +108,68 @@ for (let i = 0; i < creatureCount && positions.length > 0; i++) {
 
   // Mise à jour de l'affichage de la grille
   function updateGrid() {
+    // Réinitialisation de toutes les cellules
     cells.forEach(cell => {
       cell.className = 'cell';
       cell.textContent = '';
-      cell.style.backgroundColor = ""; // Réinitialise la couleur de fond
+      cell.style.backgroundColor = "";
     });
-
+  
     // Affichage du trésor
     const treasureCell = getCell(gameState.treasure.x, gameState.treasure.y);
     treasureCell.classList.add('treasure');
     treasureCell.textContent = '💰';
-
-// Affichage des créatures avec couleurs
-gameState.creatures.forEach(creature => {
-  const creatureCell = getCell(creature.x, creature.y);
-  creatureCell.classList.add('creature'); // Ajoute la classe générale des monstres
   
-  // Ajout de la couleur spécifique du monstre
-  creatureCell.style.backgroundColor = getMonsterColor(creature.color);
-  creatureCell.textContent = '👾';
-});
-
-// Fonction pour récupérer la couleur associée au monstre
-function getMonsterColor(type) {
-  const colors = {
-    green: "#4CAF50",
-    yellow: "#FFC107",
-    orange: "#FF9800",
-    red: "#F44336",
-    purple: "#673AB7"
-  };
-  return colors[type] || "#F44336"; // Par défaut, rouge si erreur
-}
-
-
-
+    // Affichage des créatures avec les GIFs animés
+    gameState.creatures.forEach(creature => {
+      const creatureCell = getCell(creature.x, creature.y);
+      creatureCell.classList.add('creature');
+      creatureCell.style.backgroundColor = getMonsterColor(creature.color);
+  
+      // Choix du GIF en fonction de la couleur du monstre
+      let mobGif = '';
+      switch (creature.color) {
+        case 'green':
+          mobGif = 'src/mob1.gif';
+          break;
+        case 'yellow':
+          mobGif = 'src/mob2.gif';
+          break;
+        case 'orange':
+          mobGif = 'src/mob3.gif';
+          break;
+        case 'red':
+          mobGif = 'src/mob4.gif';
+          break;
+        case 'purple':
+          mobGif = 'src/mob5.gif';
+          break;
+        default:
+          mobGif = 'src/mob1.gif';
+          break;
+      }
+      // Insertion du GIF dans la cellule
+      creatureCell.innerHTML = `<img src="${mobGif}" alt="Monstre ${creature.color}" class="creature-gif">`;
+    });
+  
     // Affichage du joueur avec un GIF
     const playerCell = getCell(gameState.player.x, gameState.player.y);
-      playerCell.classList.add('player');
-      playerCell.innerHTML = '<img src="../src/joueur.gif" alt="Joueur" class="player-gif">';
+    playerCell.classList.add('player');
+    playerCell.innerHTML = '<img src="src/joueur.gif" alt="Joueur" class="player-gif">';
+  
+    // Fonction locale pour récupérer la couleur associée au monstre
+    function getMonsterColor(type) {
+      const colors = {
+        green: "#4CAF50",
+        yellow: "#FFC107",
+        orange: "#FF9800",
+        red: "#F44336",
+        purple: "#673AB7"
+      };
+      return colors[type] || "#F44336"; // Par défaut, rouge
     }
+  }
+  
 
   // Récupérer une cellule en fonction de ses coordonnées
   function getCell(x, y) {
