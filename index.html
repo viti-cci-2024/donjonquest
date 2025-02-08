@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeu de chasse au trésor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>Chasse au Trésor</h1>
+    <div class="stats">
+      <p>Points de vie : <span id="player-hp"></span></p>
+      <p>Expérience : <span id="player-exp"></span></p>
+    </div>
+    <div id="grid" class="grid"></div>
+    <div class="controls">
+      <button id="up-btn">Haut</button>
+      <div class="horizontal-controls">
+        <button id="left-btn">Gauche</button>
+        <button id="down-btn">Bas</button>
+        <button id="right-btn">Droite</button>
+      </div>
+    </div>
+    <div id="history" class="history">
+      <h2>Historique des actions</h2>
+      <ul id="history-list"></ul>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
