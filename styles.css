@@ -75,29 +75,48 @@ h1 {
   border: none;
 }
 
-
-/* Player animation */
-.cell.player {
-  animation: highlight 2s infinite ease-in-out;
-  color: #fff;
-}
-
-@keyframes highlight {
-  0% { background-color: white; }
-  50% { background-color: #03588e; } 
-  100% { background-color: white; }
-}
-
 .player-gif, .creature-gif, .treasure-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-.cell.treasure {
-  background-color: gold;
-  color: #fff;
+@keyframes aura-animation {
+  0% {
+    box-shadow: 
+      0 0 8px rgba(0, 255, 0, 0.5),    
+      0 0 8px rgba(0, 255, 0, 0.5),    
+      0 0 8px rgba(0, 255, 0, 0.5),    
+      0 0 8px rgba(0, 255, 0, 0.5);    
+  }
+  50% {
+    box-shadow: 
+      0 0 15px rgba(0, 0, 255, 0.6),    
+      0 0 15px rgba(0, 0, 255, 0.6),    
+      0 0 15px rgba(0, 0, 255, 0.6),    
+      0 0 15px rgba(0, 0, 255, 0.6);    
+  }
+  100% {
+    box-shadow: 
+      0 0 8px rgba(0, 255, 0, 0.5),    
+      0 0 8px rgba(0, 255, 0, 0.5),    
+      0 0 8px rgba(0, 255, 0, 0.5),    
+      0 0 8px rgba(0, 255, 0, 0.5);    
+  }
 }
+
+.player {
+  position: relative;
+  animation: aura-animation 1.5s ease-in-out infinite;
+  z-index: 10;
+}
+
+
+
+
+
+
+
 
 /* Historique des actions */
 .history {
