@@ -685,9 +685,35 @@ function startGoldExplosion(duration = 2000) {
   document.getElementById("highscore").textContent =
     sessionStorage.getItem("highscore") || 0;
 
+// Fonction pour démarrer la musique de fond
+function playBackgroundMusic() {
+  const audio = document.getElementById("background-music");
+  audio.volume = 0.5; // Ajuste le volume (0.0 à 1.0)
+  audio.play().catch(error => console.log("Lecture auto bloquée, interaction requise :", error));
+}
+
+// Appeler la fonction dès le démarrage du jeu
+document.addEventListener("DOMContentLoaded", () => {
+  playBackgroundMusic();
+});
+
+
   // listener pour bouton des règles du jeu
   document.getElementById("rules-btn").addEventListener("click", () => {
     let rulesModal = new bootstrap.Modal(document.getElementById("rulesModal"));
     rulesModal.show();
   });
+});
+
+// Fonction pour activer/désactiver la musique
+document.getElementById("music-toggle").addEventListener("click", () => {
+  const audio = document.getElementById("background-music");
+
+  if (audio.paused) {
+      audio.play();
+      document.getElementById("music-toggle").innerHTML = '<i class="bi bi-music-note"></i>'; // Icône activée
+  } else {
+      audio.pause();
+      document.getElementById("music-toggle").innerHTML = '<i class="bi bi-music-note-off"></i>'; // Icône coupée
+  }
 });
