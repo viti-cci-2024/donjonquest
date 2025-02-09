@@ -214,16 +214,28 @@ h1 {
   max-width: 450px;
 }
 
-/* Stats alignées à gauche */
+/* Stats alignées à gauche et agrandies */
 .stats {
-  text-align: left;
+  background-image: url("src/statsbg.png");
+  background-size: cover; /* Ajuste la taille pour couvrir toute la div */
+  background-position: center; /* Centre l'image */
+  background-repeat: no-repeat; /* Empêche la répétition */
+  background-color: rgba(0, 0, 0, 0.7); /* Fond sombre semi-transparent */
+
+  text-align: center;
   font-size: 16px;
-  background: rgba(0, 0, 0, 0.7);
   color: white;
-  padding: 5px 15px;
+
+  padding: 15px 25px; /* Augmente l'espace intérieur */
   border-radius: 10px;
-  flex: 1;
+
+  width: 200px; /* Augmente la largeur */
+  height: 70px; /* Augmente légèrement la hauteur */
+  display: flex;
+  align-items: center; /* Centre verticalement le texte */
+  justify-content: space-between; /* Répartit le contenu */
 }
+
 /* ======================================== */
 /* ======================================== */
 /* Boutons de déplacement */
