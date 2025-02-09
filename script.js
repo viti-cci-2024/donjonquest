@@ -362,6 +362,24 @@ treasureCell.appendChild(treasureImage); // Ajoute l'image du trésor
     separator.style.margin = "10px 0";
     historyList.prepend(separator);
   }
+  
+// Gestion du déplacement avec les flèches du clavier
+document.addEventListener("keydown", (event) => {
+  switch (event.key) {
+      case "ArrowUp":
+          movePlayer(0, -1);
+          break;
+      case "ArrowDown":
+          movePlayer(0, 1);
+          break;
+      case "ArrowLeft":
+          movePlayer(-1, 0);
+          break;
+      case "ArrowRight":
+          movePlayer(1, 0);
+          break;
+  }
+});
 
   // Gère le déplacement du joueur avec icône adaptée selon la direction
   function movePlayer(dx, dy) {
