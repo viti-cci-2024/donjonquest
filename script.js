@@ -69,7 +69,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialisation de la partie
   function initializeGame() {
-      // Arrête le timer en cours (s'il existe)
+
+      // Stocker le highscore précédent avant le lancement de la partie
+  gameState.previousHighscore = parseInt(sessionStorage.getItem("highscore") || "0", 10);
+
+      // Arrête le timer en cours (ssi existe)
   clearInterval(gameTimer);
 
   // Réinitialisation du timer :
@@ -386,25 +390,43 @@ treasureCell.appendChild(treasureImage); // Ajoute l'image du trésor
     updateStats();
   }
 
-  // Vérifie le contenu de la case sur laquelle se trouve le joueur
-  function checkCell() {
-// Si le joueur trouve le trésor
-if (
-  gameState.player.x === gameState.treasure.x &&
-  gameState.player.y === gameState.treasure.y
-) {
-  addHistory("Vous avez trouvé le trésor ! 🏆", "treasure");
-  disableControls();
+// Vérifier le contenu de la case sur laquelle se trouve le joueur
+function checkCell() {
+  // Si le joueur trouve le trésor
+  if (
+    gameState.player.x === gameState.treasure.x &&
+    gameState.player.y === gameState.treasure.y
+  ) {
+    addHistory("Vous avez trouvé le trésor ! 🏆", "treasure");
+    disableControls();
+    
+    // Arrêter le timer
+    clearInterval(gameTimer);
 
-  // Arrêter le timer
-  clearInterval(gameTimer);  // stop timer qaund trésor est trouvé
+    // Afficher la modale de victoire
+    let winModal = new bootstrap.Modal(document.getElementById("winModal"));
+    
+    // Récupérer le score final
+    let currentXP = gameState.player.exp;
+    document.getElementById("win-score").textContent = currentXP;
 
-  // Afficher la modale de victoire
-  let winModal = new bootstrap.Modal(document.getElementById("winModal"));
-  winModal.show();
+    // Récupérer le highscore de début de partie
+    let prevHighscore = gameState.previousHighscore || 0;
+    let winMessage = document.getElementById("win-message");
 
-  return; // Évite d'exécuter le reste du code
-}
+    // Comparer le score final avec le highscore initial
+    if (currentXP > prevHighscore) {
+      winMessage.textContent = "Bravo, vous avez battu le meilleur score !!";
+      // Mettre à jour le highscore stocké
+      sessionStorage.setItem("highscore", currentXP);
+      document.getElementById("highscore").textContent = currentXP;
+    } else {
+      winMessage.textContent = "Vous n'avez pas battu le meilleur score";
+    }
+
+    winModal.show();
+    return; // Évite d'exécuter le reste du code
+  }
 
     // Ajoute l'Event Listener UNE SEULE FOIS après le chargement du DOM
     document.getElementById("restart-win-btn").addEventListener(
