@@ -12,12 +12,14 @@
 
 <body>
 
-  <div class="d-flex justify-content-center align-items-center mb-3 header-container">
-    <h1 class="me-3">Chasse au Trésor</h1>
-    <img id="timer" src="src/sablier.gif" alt="Temps restant" class="timer-gif me-3"><p id="timer-text"></p>
+  <div class="header d-flex justify-content-center align-items-center bg-dark text-light mb-3">
+    <img src="src/logo.png" alt="Logo du jeu" class="game-logo me-3">
+    <img id="timer" src="src/sablier.gif" alt="Temps restant" class="timer-gif me-3">
+    <p id="timer-text"></p>
     <p class="highscore-text me-3">Highscore : <span id="highscore">0</span> ⭐</p>
     <button id="rules-btn" class="btn-rules"><i class="bi bi-file-text"></i></button>
   </div>
+
      
     <!-- Zone de jeu : grille et historique -->
     <div class="container-fluid">
