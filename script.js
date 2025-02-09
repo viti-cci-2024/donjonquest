@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let gameTimer;
   let timeLeft = 60; // Temps initial en secondes
 
-
   // Création de la grille 10x10
   function createGrid() {
     for (let y = 0; y < gridSize; y++) {
@@ -42,53 +41,66 @@ document.addEventListener("DOMContentLoaded", () => {
     treasure: { x: null, y: null },
     creatures: [], // Chaque créature possède { x, y, hp, attack }
   };
-  
+
   // Démarre le temps
   function startTimer() {
     timeLeft = 60; // Réinitialise le temps
     gameTimer = setInterval(() => {
-        timeLeft--;
+      timeLeft--;
 
-        // Si le temps est écoulé, afficher la modale et stopper le jeu
-        if (timeLeft <= 0) {
-            clearInterval(gameTimer);
-            disableControls();
-            addHistory("⏳ Temps écoulé ! Partie terminée.", "lose");
+      // Si le temps est écoulé, afficher la modale et stopper le jeu
+      if (timeLeft <= 0) {
+        clearInterval(gameTimer);
+        disableControls();
+        addHistory("⏳ Temps écoulé ! Partie terminée.", "lose");
 
-            // Afficher la modale de fin de temps
-            let timeUpModal = new bootstrap.Modal(document.getElementById("timeUpModal"));
-            timeUpModal.show();
+        // Jouer le son de la mort qui tue
+        const deathSound = document.getElementById("death-sound");
+        deathSound.volume = 0.9; // Ajuster le volume (optionnel)
+        deathSound
+          .play()
+          .catch((error) => console.log("Erreur lecture audio :", error));
 
-            // Relancer la partie au clic sur "Rejouer"
-            document.getElementById("restart-time-btn").addEventListener("click", () => {
-                initializeGame();
-            });
-        }
+        // Afficher la modale de fin de temps
+        let timeUpModal = new bootstrap.Modal(
+          document.getElementById("timeUpModal")
+        );
+        timeUpModal.show();
+
+        // Relancer la partie au clic sur "Rejouer"
+        document
+          .getElementById("restart-time-btn")
+          .addEventListener("click", () => {
+            initializeGame();
+          });
+      }
     }, 1000); // Met à jour chaque seconde
-}
+  }
 
   // Initialisation de la partie
   function initializeGame() {
+    // Stocker le highscore précédent avant le lancement de la partie
+    gameState.previousHighscore = parseInt(
+      sessionStorage.getItem("highscore") || "0",
+      10
+    );
 
-      // Stocker le highscore précédent avant le lancement de la partie
-  gameState.previousHighscore = parseInt(sessionStorage.getItem("highscore") || "0", 10);
+    // Arrête le timer en cours (ssi existe)
+    clearInterval(gameTimer);
 
-      // Arrête le timer en cours (ssi existe)
-  clearInterval(gameTimer);
+    // Réinitialisation du timer :
+    timeLeft = 60;
+    //document.getElementById("timer-text").textContent = timeLeft + " sec";
 
-  // Réinitialisation du timer :
-  timeLeft = 60;
-  //document.getElementById("timer-text").textContent = timeLeft + " sec";
-
-  // Forcer le redémarrage du GIF en modifiant son src avec un paramètre aléatoire
-  const timerImg = document.getElementById("timer");
-  timerImg.src = "src/sablier.gif?" + new Date().getTime();
+    // Forcer le redémarrage du GIF en modifiant son src avec un paramètre aléatoire
+    const timerImg = document.getElementById("timer");
+    timerImg.src = "src/sablier.gif?" + new Date().getTime();
 
     gameState.player.hp = gameState.player.maxHp;
     gameState.player.exp = 0;
     gameState.player.attack = 20; // Remet la force du joueur à 20 en début de partie
-    
-// Réinitialisation des créatures et objets
+
+    // Réinitialisation des créatures et objets
     gameState.creatures = [];
     enableControls();
 
@@ -123,11 +135,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Types de monstres avec leurs caractéristiques
     const monsterTypes = [
-      { color: "CATAPOULPE", minHp: 10, maxHp: 20, minAtk: 5, maxAtk: 10, xp: 1 }, // Vert (facile) - 1 XP
-      { color: "HORRIGLUANT", minHp: 15, maxHp: 25, minAtk: 7, maxAtk: 12, xp: 2 }, // Jaune (moyen) - 2 XP
-      { color: "GOBOURRIN", minHp: 20, maxHp: 30, minAtk: 10, maxAtk: 15, xp: 3 }, // Orange (difficile) - 3 XP
+      {
+        color: "CATAPOULPE",
+        minHp: 10,
+        maxHp: 20,
+        minAtk: 5,
+        maxAtk: 10,
+        xp: 1,
+      }, // Vert (facile) - 1 XP
+      {
+        color: "HORRIGLUANT",
+        minHp: 15,
+        maxHp: 25,
+        minAtk: 7,
+        maxAtk: 12,
+        xp: 2,
+      }, // Jaune (moyen) - 2 XP
+      {
+        color: "GOBOURRIN",
+        minHp: 20,
+        maxHp: 30,
+        minAtk: 10,
+        maxAtk: 15,
+        xp: 3,
+      }, // Orange (difficile) - 3 XP
       { color: "TADOS", minHp: 25, maxHp: 35, minAtk: 12, maxAtk: 18, xp: 4 }, // Rouge (très difficile) - 4 XP
-      { color: "GROLEMME", minHp: 30, maxHp: 40, minAtk: 15, maxAtk: 20, xp: 5 }, // Violet foncé (extrême) - 5 XP
+      {
+        color: "GROLEMME",
+        minHp: 30,
+        maxHp: 40,
+        minAtk: 15,
+        maxAtk: 20,
+        xp: 5,
+      }, // Violet foncé (extrême) - 5 XP
     ];
 
     // Placement des monstres
@@ -178,10 +218,9 @@ document.addEventListener("DOMContentLoaded", () => {
     updateGrid();
     updateStats();
     addHistory("La partie commence !", "info");
-    
-  // Démarrer le timer
-  startTimer();
-    
+
+    // Démarrer le timer
+    startTimer();
   }
 
   // Mise à jour de l'affichage de la grille
@@ -193,18 +232,18 @@ document.addEventListener("DOMContentLoaded", () => {
       cell.style.backgroundColor = "";
     });
 
-// Affichage du trésor
-const treasureCell = getCell(gameState.treasure.x, gameState.treasure.y);
-treasureCell.classList.add("treasure");
+    // Affichage du trésor
+    const treasureCell = getCell(gameState.treasure.x, gameState.treasure.y);
+    treasureCell.classList.add("treasure");
 
-// Créer une balise <img> pour le trésor animé
-const treasureImage = document.createElement('img');
-treasureImage.src = 'src/tresor.gif'; // Remplace ici par le chemin correct de ton gif
-treasureImage.classList.add('treasure-image'); // Classe optionnelle pour styliser l'image
+    // Créer une balise <img> pour le trésor animé
+    const treasureImage = document.createElement("img");
+    treasureImage.src = "src/tresor.gif"; // Remplace ici par le chemin correct de ton gif
+    treasureImage.classList.add("treasure-image"); // Classe optionnelle pour styliser l'image
 
-// Ajouter l'image dans la cellule
-treasureCell.innerHTML = '';  // Vide le contenu précédent de la cellule (le texte)
-treasureCell.appendChild(treasureImage); // Ajoute l'image du trésor
+    // Ajouter l'image dans la cellule
+    treasureCell.innerHTML = ""; // Vide le contenu précédent de la cellule (le texte)
+    treasureCell.appendChild(treasureImage); // Ajoute l'image du trésor
 
     // Affichage des épées sur la carte
     gameState.swords.forEach((sword) => {
@@ -363,23 +402,23 @@ treasureCell.appendChild(treasureImage); // Ajoute l'image du trésor
     historyList.prepend(separator);
   }
 
-// Gestion du déplacement avec les flèches du clavier
-document.addEventListener("keydown", (event) => {
-  switch (event.key) {
+  // Gestion du déplacement avec les flèches du clavier
+  document.addEventListener("keydown", (event) => {
+    switch (event.key) {
       case "ArrowUp":
-          movePlayer(0, -1);
-          break;
+        movePlayer(0, -1);
+        break;
       case "ArrowDown":
-          movePlayer(0, 1);
-          break;
+        movePlayer(0, 1);
+        break;
       case "ArrowLeft":
-          movePlayer(-1, 0);
-          break;
+        movePlayer(-1, 0);
+        break;
       case "ArrowRight":
-          movePlayer(1, 0);
-          break;
-  }
-});
+        movePlayer(1, 0);
+        break;
+    }
+  });
 
   // Gère le déplacement du joueur avec icône adaptée selon la direction
   function movePlayer(dx, dy) {
@@ -408,46 +447,52 @@ document.addEventListener("keydown", (event) => {
     updateStats();
   }
 
-// Vérifier le contenu de la case sur laquelle se trouve le joueur
-function checkCell() {
-  // Si le joueur trouve le trésor
-  if (
-    gameState.player.x === gameState.treasure.x &&
-    gameState.player.y === gameState.treasure.y
-  ) {
-    addHistory("Vous avez trouvé le trésor ! 🏆", "treasure");
-    disableControls();
-    
-    // Arrêter le timer
-    clearInterval(gameTimer);
+  // Vérifier le contenu de la case sur laquelle se trouve le joueur
+  function checkCell() {
+    // Si le joueur trouve le trésor
+    if (
+      gameState.player.x === gameState.treasure.x &&
+      gameState.player.y === gameState.treasure.y
+    ) {
+      addHistory("Vous avez trouvé le trésor ! 🏆", "treasure");
+      disableControls();
 
-    startGoldExplosion(2000);
+      // Arrêter le timer
+      clearInterval(gameTimer);
 
+      // Jouer le son de victoire
+      const victorySound = document.getElementById("victory-sound");
+      victorySound.volume = 0.9; // Ajuste le volume (optionnel)
+      victorySound
+        .play()
+        .catch((error) => console.log("Erreur lecture audio :", error));
 
-    // Afficher la modale de victoire
-    let winModal = new bootstrap.Modal(document.getElementById("winModal"));
-    
-    // Récupérer le score final
-    let currentXP = gameState.player.exp;
-    document.getElementById("win-score").textContent = currentXP;
+      startGoldExplosion(2000);
 
-    // Récupérer le highscore de début de partie
-    let prevHighscore = gameState.previousHighscore || 0;
-    let winMessage = document.getElementById("win-message");
+      // Afficher la modale de victoire
+      let winModal = new bootstrap.Modal(document.getElementById("winModal"));
 
-    // Comparer le score final avec le highscore initial
-    if (currentXP > prevHighscore) {
-      winMessage.textContent = "Bravo, vous avez battu le meilleur score !!";
-      // Mettre à jour le highscore stocké
-      sessionStorage.setItem("highscore", currentXP);
-      document.getElementById("highscore").textContent = currentXP;
-    } else {
-      winMessage.textContent = "Vous n'avez pas battu le meilleur score";
+      // Récupérer le score final
+      let currentXP = gameState.player.exp;
+      document.getElementById("win-score").textContent = currentXP;
+
+      // Récupérer le highscore de début de partie
+      let prevHighscore = gameState.previousHighscore || 0;
+      let winMessage = document.getElementById("win-message");
+
+      // Comparer le score final avec le highscore initial
+      if (currentXP > prevHighscore) {
+        winMessage.textContent = "Bravo, vous avez battu le meilleur score !!";
+        // Mettre à jour le highscore stocké
+        sessionStorage.setItem("highscore", currentXP);
+        document.getElementById("highscore").textContent = currentXP;
+      } else {
+        winMessage.textContent = "Vous n'avez pas battu le meilleur score";
+      }
+
+      winModal.show();
+      return; // Évite d'exécuter le reste du code
     }
-
-    winModal.show();
-    return; // Évite d'exécuter le reste du code
-  }
 
     // Ajoute l'Event Listener UNE SEULE FOIS après le chargement du DOM
     document.getElementById("restart-win-btn").addEventListener(
@@ -471,6 +516,14 @@ function checkCell() {
         "Vous avez trouvé une épée vorpaline ! ⚔️ Votre attaque augmente de 2.",
         "win"
       );
+
+      // Jouer le son de l'épée
+      const swordSound = document.getElementById("sword-sound");
+      swordSound.volume = 0.7; // Ajuster le volume (optionnel)
+      swordSound
+        .play()
+        .catch((error) => console.log("Erreur lecture audio :", error));
+
       updateStats(); // Mise à jour stats
     }
 
@@ -490,6 +543,14 @@ function checkCell() {
       );
 
       addHistory("Vous avez bu une potion ! ❤️ +5 PV", "win");
+
+      // Jouer le son de la potion
+      const potionSound = document.getElementById("potion-sound");
+      potionSound.volume = 0.7; // Ajuster le volume (optionnel)
+      potionSound
+        .play()
+        .catch((error) => console.log("Erreur lecture audio :", error));
+
       updateStats(); // Mise à jour des stats
     }
 
@@ -534,6 +595,17 @@ function checkCell() {
           );
           gameState.creatures.splice(creatureIndex, 1);
           gameState.player.exp += creature.xp; // Donne de l'XP en fonction du type de monstre
+
+          // Jouer le son de "swordslash" SI le joueur n'a pas encore pris de dégâts
+          if (creature.hp + gameState.player.attack >= creature.hp) {
+            const swordSlashSound =
+              document.getElementById("sword-slash-sound");
+            swordSlashSound.volume = 0.8; // Volume ajusté
+            swordSlashSound
+              .play()
+              .catch((error) => console.log("Erreur lecture audio :", error));
+          }
+
           updateStats();
           break;
         }
@@ -547,6 +619,14 @@ function checkCell() {
           } dégâts. (Votre HP restant: ${Math.max(gameState.player.hp, 0)})`,
           "damage"
         );
+
+        // Jouer le son "hurt.mp3"
+        const hurtSound = document.getElementById("hurt-sound");
+        hurtSound.volume = 0.8; // Ajuste le volume (optionnel)
+        hurtSound
+          .play()
+          .catch((error) => console.log("Erreur lecture audio :", error));
+
         updateStats(); // Mise à jour de l'affichage des stats
 
         // Vérifier si le joueur est mort après avoir perdu des HP
@@ -558,7 +638,14 @@ function checkCell() {
           disableControls();
           clearInterval(gameTimer); // STOPPE LE TIMER IMMÉDIATEMENT
 
-          // Afficher la modale Bootstrap
+          // Jouer le son de la mort qui tue
+          const deathSound = document.getElementById("death-sound");
+          deathSound.volume = 0.9; // Ajuster le volume (optionnel)
+          deathSound
+            .play()
+            .catch((error) => console.log("Erreur lecture audio :", error));
+
+          // Afficher la modale de mort
           let deathModal = new bootstrap.Modal(
             document.getElementById("deathModal")
           );
@@ -622,16 +709,23 @@ function checkCell() {
       sessionStorage.setItem("rulesShown", "true"); // Marque que les règles ont été affichées
     }
   }
-// Fonction pour créer une explosion plus large de pièces d'or
-function startGoldExplosion(duration = 2000) {
-  const numberOfCoins = 50; // Augmenté pour plus d'effet
-  const body = document.body;
+  // Fonction pour créer une explosion plus large de pièces d'or
+  function startGoldExplosion(duration = 2000) {
+    // Jouer le son de pièces
+    const coinSound = document.getElementById("coin-sound");
+    coinSound.volume = 0.8; // Ajuster le volume (optionnel)
+    coinSound
+      .play()
+      .catch((error) => console.log("Erreur lecture audio :", error));
 
-  // Déterminer le centre de l'écran
-  const centerX = window.innerWidth / 2;
-  const centerY = window.innerHeight / 2;
+    const numberOfCoins = 50; // Augmenté pour plus d'effet
+    const body = document.body;
 
-  for (let i = 0; i < numberOfCoins; i++) {
+    // Déterminer le centre de l'écran
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+
+    for (let i = 0; i < numberOfCoins; i++) {
       let coin = document.createElement("img");
       coin.src = "src/coin.gif"; // Remplace par le bon chemin de l'image
       coin.classList.add("gold-coin");
@@ -650,23 +744,28 @@ function startGoldExplosion(duration = 2000) {
 
       // Appliquer l'animation avec une légère variation de vitesse
       setTimeout(() => {
-          coin.style.transform = `translate(${finalX - centerX}px, ${finalY - centerY}px) scale(1.3) rotate(${Math.random() * 360}deg)`;
-          coin.style.opacity = "1";
+        coin.style.transform = `translate(${finalX - centerX}px, ${
+          finalY - centerY
+        }px) scale(1.3) rotate(${Math.random() * 360}deg)`;
+        coin.style.opacity = "1";
       }, 10);
 
       // Faire retomber les pièces en bas de l'écran avec une trajectoire aléatoire
       setTimeout(() => {
-          coin.style.transform = `translate(${finalX - centerX + Math.random() * 100 - 50}px, ${window.innerHeight}px) scale(0.9) rotate(${Math.random() * 360}deg)`;
-          coin.style.opacity = "0";
+        coin.style.transform = `translate(${
+          finalX - centerX + Math.random() * 100 - 50
+        }px, ${window.innerHeight}px) scale(0.9) rotate(${
+          Math.random() * 360
+        }deg)`;
+        coin.style.opacity = "0";
       }, 1200 + Math.random() * 500); // Ajoute un léger délai aléatoire pour un effet plus naturel
 
       // Supprimer les pièces après l'animation
       setTimeout(() => {
-          coin.remove();
+        coin.remove();
       }, duration + 500);
+    }
   }
-}
-
 
   // l’effet d’éclair
 
@@ -685,18 +784,21 @@ function startGoldExplosion(duration = 2000) {
   document.getElementById("highscore").textContent =
     sessionStorage.getItem("highscore") || 0;
 
-// Fonction pour démarrer la musique de fond
-function playBackgroundMusic() {
-  const audio = document.getElementById("background-music");
-  audio.volume = 0.5; // Ajuste le volume (0.0 à 1.0)
-  audio.play().catch(error => console.log("Lecture auto bloquée, interaction requise :", error));
-}
+  // Fonction pour démarrer la musique de fond
+  function playBackgroundMusic() {
+    const audio = document.getElementById("background-music");
+    audio.volume = 0.5; // Ajuste le volume (0.0 à 1.0)
+    audio
+      .play()
+      .catch((error) =>
+        console.log("Lecture auto bloquée, interaction requise :", error)
+      );
+  }
 
-// Appeler la fonction dès le démarrage du jeu
-document.addEventListener("DOMContentLoaded", () => {
-  playBackgroundMusic();
-});
-
+  // Appeler la fonction dès le démarrage du jeu
+  document.addEventListener("DOMContentLoaded", () => {
+    playBackgroundMusic();
+  });
 
   // listener pour bouton des règles du jeu
   document.getElementById("rules-btn").addEventListener("click", () => {
@@ -710,10 +812,12 @@ document.getElementById("music-toggle").addEventListener("click", () => {
   const audio = document.getElementById("background-music");
 
   if (audio.paused) {
-      audio.play();
-      document.getElementById("music-toggle").innerHTML = '<i class="bi bi-music-note"></i>'; // Icône activée
+    audio.play();
+    document.getElementById("music-toggle").innerHTML =
+      '<i class="bi bi-music-note"></i>'; // Icône activée
   } else {
-      audio.pause();
-      document.getElementById("music-toggle").innerHTML = '<i class="bi bi-music-note-off"></i>'; // Icône coupée
+    audio.pause();
+    document.getElementById("music-toggle").innerHTML =
+      '<i class="bi bi-music-note-off"></i>'; // Icône coupée
   }
 });
