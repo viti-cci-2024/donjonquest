@@ -123,22 +123,22 @@
 
 <!-- Modale des Règles du Jeu -->
 <div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-md"> <!-- Réduit la taille de la modale -->
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="rulesModalLabel">📜 Règles du Jeu</h5>
       </div>
       <div class="modal-body text-center">
-        <p>Bienvenue dans la chasse aux monstres ! 💰</p>
-        <p>Vous avez seulement 60 secondes à cause de l'air putride du donjon pour gagner un maximum d'XP</p>
-        <p>💰 Le trésor vous fera terminer la partie.</p>
-        <p>mais le véritable enjeu est de tuer un maximum de créatures pour gagner !</p>
-        <p>⚔️ Ramassez des épées pour augmenter votre attaque.</p>
-        <p>❤️ Buvez des potions pour récupérer des PV.</p>
-        <p>👹 Combattez des monstres et gagnez de l'expérience.</p>
-        <p>🕹️ Utilisez les boutons pour vous déplacer.</p>
-        <p>Fais le meilleur score...</p>
-        <p>et bonne chance à toi !</p>
+        <img src="src/enter.png" alt="Entrée du donjon" class="img-fluid w-50 d-block mx-auto"> 
+        <p class="fs-6 lh-sm mt-2">
+          Bienvenue dans la chasse aux monstres ! <br> Tu as seulement <strong>60 secondes</strong> à cause de l'air putride du donjon pour gagner un maximum d'XP.<br>
+          <br>💰 Trouver le trésor met fin à la partie, mais l'objectif est de tuer un maximum de créatures pour gagner !<br><br>
+          ⚔️ Ramasse des épées pour augmenter ton attaque.<br>
+          ❤️ Bois des potions pour récupérer des PV.<br>
+          👹 Combat des monstres et gagne de l'expérience.<br>
+          🕹️ Utilise les boutons pour te déplacer.<br>
+          Fais le meilleur score... et bonne chance  ! 
+        </p>
       </div>
       <div class="modal-footer">
         <button id="close-rules-btn" class="btn btn-primary" data-bs-dismiss="modal">Yosh !</button>
@@ -146,6 +146,10 @@
     </div>
   </div>
 </div>
+
+
+
+
 
 
   <script src="script.js"></script>
