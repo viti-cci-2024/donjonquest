@@ -41,14 +41,27 @@
                   </div>
                   <div class="row justify-content-center mt-0">
                     <div class="col-auto d-flex flex-column align-items-center">
-                      <button id="up-btn" class="btn-move"><i class="bi bi-arrow-up"></i></button>
+                      <!-- Bouton pour se déplacer vers le haut -->
+                      <button id="up-btn" class="btn-move">
+                        <img src="src/haut.png" alt="Haut" class="arrow-btn-img">
+                      </button>
                       <div class="horizontal-buttons d-flex justify-content-center mt-1">
-                        <button id="left-btn" class="btn-move"><i class="bi bi-arrow-left"></i></button>
-                        <button id="down-btn" class="btn-move mx-1"><i class="bi bi-arrow-down"></i></button>
-                        <button id="right-btn" class="btn-move"><i class="bi bi-arrow-right"></i></button>
+                        <!-- Bouton pour se déplacer vers la gauche -->
+                        <button id="left-btn" class="btn-move">
+                          <img src="src/gauche.png" alt="Gauche" class="arrow-btn-img">
+                        </button>
+                        <!-- Bouton pour se déplacer vers le bas -->
+                        <button id="down-btn" class="btn-move mx-1">
+                          <img src="src/bas.png" alt="Bas" class="arrow-btn-img">
+                        </button>
+                        <!-- Bouton pour se déplacer vers la droite -->
+                        <button id="right-btn" class="btn-move">
+                          <img src="src/droite.png" alt="Droite" class="arrow-btn-img">
+                        </button>
                       </div>
                     </div>
                   </div>
+                  
                 </div>
               </div>
   
@@ -115,7 +128,7 @@
       </div>
       <div class="modal-body">
         <img src="src/death.png" alt="Écran de temps écoulé" class="img-fluid w-75 d-block mx-auto mb-3">
-        <p>Le temps est écoulé, tu es 💀 en suffocant ! <br> Prêt pour y retourner ?</p>
+        <p>Le temps est écoulé, tu es mort en suffoquant ! <br> Prêt pour y retourner ?</p>
       </div>
       <div class="modal-footer justify-content-center"> <!-- Centrer le bouton -->
         <button id="restart-time-btn" class="btn btn-danger" data-bs-dismiss="modal">Et comment !</button>

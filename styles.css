@@ -5,7 +5,8 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f0f0f0;
   margin: 0;
-  
+  background: url('src/background.gif') no-repeat center center fixed;
+  background-size: cover; /* Ajuste l'image pour couvrir tout l'écran */
 }
 
 .game-container {
@@ -98,6 +99,47 @@ h1 {
   height: 100%;
   object-fit: contain;
 }
+
+/* ASPECT PARCHEMIN HISTORIQUE  */
+
+/* Appliquer un fond type parchemin à la fenêtre d'historique */
+.history {
+  /* Fond en couleur claire avec une image de texture en répétition.
+     Veillez à placer votre image "parchment.png" (ou tout autre nom) dans le dossier "src". */
+  background: #fdf6e3 url('src/parchemin.jpg') repeat;
+  background-size: auto;
+  
+  /* Bordure et arrondis pour un effet ancien */
+  border: 2px solid #d2b48c;
+  border-radius: 8px;
+  
+  /* Espacement intérieur */
+  padding: 15px;
+  
+  /* Couleur du texte et typographie */
+  color: #5a4d41;
+  font-family: 'Georgia', serif;
+  
+  /* Ombre interne pour simuler la texture du papier */
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+  
+  /* Dimensions existantes */
+  max-height: 420px;
+  width: 300px;
+  overflow-y: auto;
+}
+
+/* Optionnel : personnaliser le style de la scrollbar (pour les navigateurs Webkit) */
+.history::-webkit-scrollbar {
+  width: 8px;
+}
+
+.history::-webkit-scrollbar-thumb {
+  background: #d2b48c;
+  border-radius: 4px;
+}
+
+
 
 /* ======================================== */
 /*  Aura torche player */
@@ -214,17 +256,31 @@ h1 {
   max-width: 450px;
 }
 
-.controls-stats-container {
-  width: 100%; /* Occupe toute la largeur sans forcer un dépassement */
-  background-image: url("src/headerbg.webp");
-  background-size: content; /* Ajuste la taille */
-  background-position: center; /* Centre l'image */
-  background-repeat: no-repeat; /* Empêche la répétition */
-  display: flex; /* Active flexbox */
-  justify-content: center; /* Centre horizontalement les éléments */
-  align-items: center; /* Centre verticalement */
-  padding: 15px 0; /* Ajoute de l’espace autour */
+/* ASPECT BOUTONS DEPLAMCEENT */
+/* Style pour les boutons de déplacement */
+.btn-move {
+  background: transparent; /* Fond transparent pour laisser apparaître l'image */
+  border: none;            /* Suppression de la bordure par défaut */
+  padding: 0;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
 }
+
+/* Style pour l'image à l'intérieur du bouton */
+.arrow-btn-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Effet de survol sur l'image */
+.btn-move:hover .arrow-btn-img {
+  transform: scale(1.1);
+}
+
+/* ======================================== */
 
 
 /* Stats alignées à gauche et agrandies */
