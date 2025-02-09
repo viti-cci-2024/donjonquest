@@ -362,7 +362,7 @@ treasureCell.appendChild(treasureImage); // Ajoute l'image du trésor
     separator.style.margin = "10px 0";
     historyList.prepend(separator);
   }
-  
+
 // Gestion du déplacement avec les flèches du clavier
 document.addEventListener("keydown", (event) => {
   switch (event.key) {
@@ -420,6 +420,9 @@ function checkCell() {
     
     // Arrêter le timer
     clearInterval(gameTimer);
+
+    startGoldExplosion(2000);
+
 
     // Afficher la modale de victoire
     let winModal = new bootstrap.Modal(document.getElementById("winModal"));
@@ -619,6 +622,51 @@ function checkCell() {
       sessionStorage.setItem("rulesShown", "true"); // Marque que les règles ont été affichées
     }
   }
+// Fonction pour créer une explosion plus large de pièces d'or
+function startGoldExplosion(duration = 2000) {
+  const numberOfCoins = 50; // Augmenté pour plus d'effet
+  const body = document.body;
+
+  // Déterminer le centre de l'écran
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+
+  for (let i = 0; i < numberOfCoins; i++) {
+      let coin = document.createElement("img");
+      coin.src = "src/coin.gif"; // Remplace par le bon chemin de l'image
+      coin.classList.add("gold-coin");
+
+      // Positionner la pièce au centre
+      coin.style.left = `${centerX}px`;
+      coin.style.top = `${centerY}px`;
+
+      body.appendChild(coin);
+
+      // Générer un angle aléatoire et une distance plus grande
+      const angle = Math.random() * 2 * Math.PI; // Angle entre 0 et 360°
+      const distance = Math.random() * 350 + 100; // Distance plus large (100 à 450 pixels)
+      const finalX = centerX + Math.cos(angle) * distance;
+      const finalY = centerY + Math.sin(angle) * distance;
+
+      // Appliquer l'animation avec une légère variation de vitesse
+      setTimeout(() => {
+          coin.style.transform = `translate(${finalX - centerX}px, ${finalY - centerY}px) scale(1.3) rotate(${Math.random() * 360}deg)`;
+          coin.style.opacity = "1";
+      }, 10);
+
+      // Faire retomber les pièces en bas de l'écran avec une trajectoire aléatoire
+      setTimeout(() => {
+          coin.style.transform = `translate(${finalX - centerX + Math.random() * 100 - 50}px, ${window.innerHeight}px) scale(0.9) rotate(${Math.random() * 360}deg)`;
+          coin.style.opacity = "0";
+      }, 1200 + Math.random() * 500); // Ajoute un léger délai aléatoire pour un effet plus naturel
+
+      // Supprimer les pièces après l'animation
+      setTimeout(() => {
+          coin.remove();
+      }, duration + 500);
+  }
+}
+
 
   // l’effet d’éclair
 

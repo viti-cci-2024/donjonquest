@@ -410,6 +410,19 @@ h1 {
   background: #900000;
 }
 
+
+/* Effet de pluie-explosion de pièces plus large */
+.gold-coin {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  opacity: 0;
+  transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+}
+
+
+
 /* ======================================== */
 /* Modale de victoire */
 /* ======================================== */
