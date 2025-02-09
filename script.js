@@ -82,6 +82,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     gameState.player.hp = gameState.player.maxHp;
     gameState.player.exp = 0;
+    gameState.player.attack = 20; // Remet la force du joueur à 20 en début de partie
+    
+// Réinitialisation des créatures et objets
     gameState.creatures = [];
     enableControls();
 
