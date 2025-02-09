@@ -69,22 +69,25 @@
     </div>
   </div>
   
-  <!-- Modale de mort du joueur -->
+<!-- Modale de mort du joueur -->
 <div class="modal fade" id="deathModal" tabindex="-1" aria-labelledby="deathModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content text-center"> <!-- Centrage du texte -->
       <div class="modal-header">
-        <h5 class="modal-title" id="deathModalLabel">💀 Vous êtes mort ! 💀</h5>
+        <h5 class="modal-title w-100" id="deathModalLabel">💀 Vous êtes mort ! 💀</h5>
       </div>
       <div class="modal-body">
+        <img src="src/death.png" alt="Écran de mort" class="img-fluid w-75 d-block mx-auto mb-3">
         <p>Prêt pour y retourner ?</p>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer justify-content-center"> <!-- Centrer le bouton -->
         <button id="restart-btn" class="btn btn-dark" data-bs-dismiss="modal">J'aurai ma revanche !</button>
       </div>
     </div>
   </div>
 </div>
+
+
 
 <!-- Modale de victoire -->
 <div class="modal fade" id="winModal" tabindex="-1" aria-labelledby="winModalLabel" aria-hidden="true">
@@ -107,19 +110,21 @@
 <!-- Modale Temps Écoulé -->
 <div class="modal fade" id="timeUpModal" tabindex="-1" aria-labelledby="timeUpModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content text-center"> <!-- Centrage du texte -->
       <div class="modal-header">
-        <h5 class="modal-title" id="timeUpModalLabel">⏳ Temps écoulé !</h5>
+        <h5 class="modal-title w-100" id="timeUpModalLabel">⏳ Temps écoulé ! 💀</h5>
       </div>
       <div class="modal-body">
-        <p>Le temps est écoulé, vous avez perdu ! Essayez encore !</p>
+        <img src="src/death.png" alt="Écran de temps écoulé" class="img-fluid w-75 d-block mx-auto mb-3">
+        <p>Le temps est écoulé, tu es 💀 en suffocant ! <br> Prêt pour y retourner ?</p>
       </div>
-      <div class="modal-footer">
-        <button id="restart-time-btn" class="btn btn-danger" data-bs-dismiss="modal">Rejouer</button>
+      <div class="modal-footer justify-content-center"> <!-- Centrer le bouton -->
+        <button id="restart-time-btn" class="btn btn-danger" data-bs-dismiss="modal">Et comment !</button>
       </div>
     </div>
   </div>
 </div>
+
 
 <!-- Modale des Règles du Jeu -->
 <div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
