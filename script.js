@@ -510,6 +510,7 @@ if (
             "lose"
           );
           disableControls();
+          clearInterval(gameTimer); // STOPPE LE TIMER IMMÉDIATEMENT
 
           // Afficher la modale Bootstrap
           let deathModal = new bootstrap.Modal(
