@@ -214,6 +214,19 @@ h1 {
   max-width: 450px;
 }
 
+.controls-stats-container {
+  width: 100%; /* Occupe toute la largeur sans forcer un dépassement */
+  background-image: url("src/headerbg.webp");
+  background-size: content; /* Ajuste la taille */
+  background-position: center; /* Centre l'image */
+  background-repeat: no-repeat; /* Empêche la répétition */
+  display: flex; /* Active flexbox */
+  justify-content: center; /* Centre horizontalement les éléments */
+  align-items: center; /* Centre verticalement */
+  padding: 15px 0; /* Ajoute de l’espace autour */
+}
+
+
 /* Stats alignées à gauche et agrandies */
 .stats {
   background-image: url("src/statsbg.png");
@@ -266,6 +279,7 @@ h1 {
   display: flex;
   justify-content: center;
   gap: 5px;
+
 }
 
 /* Effets au survol et clic */

@@ -19,8 +19,7 @@
     <p class="highscore-text me-3">Highscore : <span id="highscore">0</span> ⭐</p>
     <button id="rules-btn" class="btn-rules"><i class="bi bi-file-text"></i></button>
   </div>
-
-     
+    
     <!-- Zone de jeu : grille et historique -->
     <div class="container-fluid">
       <div class="container">
@@ -30,30 +29,29 @@
             <div class="col-md-auto">
               <div id="grid" class="grid"></div>
               <!-- Zone des stats et des boutons alignés à gauche -->
-              <div class="controls-stats mt-3">
-                <div class="row">
-                  <!-- Stats -->
-                  <div class="col-auto">
-                    <div class="stats p-2 d-flex justify-content-center align-items-center text-center text-dark fw-bolder">
-                      <p class="m-0">❤️ <span id="player-hp"></span> | ⭐ <span id="player-exp"></span> | ⚔️ <span id="player-attack"></span></p>
+              <div class="container-fluid controls-stats-container text-center">
+                <div class="controls-stats mt-3">
+                  <div class="row justify-content-center">
+                    <!-- Stats -->
+                    <div class="col-auto">
+                      <div class="stats p-2 d-flex justify-content-center align-items-center text-dark fw-bolder">
+                        <p class="m-0">❤️ <span id="player-hp"></span> | ⭐ <span id="player-exp"></span> | ⚔️ <span id="player-attack"></span></p>
+                      </div>
                     </div>
-                    
+                  </div>
+                  <div class="row justify-content-center mt-0">
+                    <div class="col-auto d-flex flex-column align-items-center">
+                      <button id="up-btn" class="btn-move"><i class="bi bi-arrow-up"></i></button>
+                      <div class="horizontal-buttons d-flex justify-content-center mt-1">
+                        <button id="left-btn" class="btn-move"><i class="bi bi-arrow-left"></i></button>
+                        <button id="down-btn" class="btn-move mx-1"><i class="bi bi-arrow-down"></i></button>
+                        <button id="right-btn" class="btn-move"><i class="bi bi-arrow-right"></i></button>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="row mt-2">
-<!-- Boutons de déplacement alignés correctement -->
-<div class="row mt-2">
-  <div class="col-auto d-flex flex-column align-items-center">
-    <button id="up-btn" class="btn-move"><i class="bi bi-arrow-up"></i></button>
-    <div class="horizontal-buttons d-flex justify-content-center mt-1">
-      <button id="left-btn" class="btn-move"><i class="bi bi-arrow-left"></i></button>
-      <button id="down-btn" class="btn-move mx-1"><i class="bi bi-arrow-down"></i></button>
-      <button id="right-btn" class="btn-move"><i class="bi bi-arrow-right"></i></button>
-    </div>
-  </div>
-</div>
-                </div>
               </div>
+  
             </div>
             <!-- Fin grille -->
   
