@@ -119,11 +119,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Types de monstres avec leurs caractéristiques
     const monsterTypes = [
-      { color: "green", minHp: 10, maxHp: 20, minAtk: 5, maxAtk: 10, xp: 1 }, // Vert (facile) - 1 XP
-      { color: "yellow", minHp: 15, maxHp: 25, minAtk: 7, maxAtk: 12, xp: 2 }, // Jaune (moyen) - 2 XP
-      { color: "orange", minHp: 20, maxHp: 30, minAtk: 10, maxAtk: 15, xp: 3 }, // Orange (difficile) - 3 XP
-      { color: "red", minHp: 25, maxHp: 35, minAtk: 12, maxAtk: 18, xp: 4 }, // Rouge (très difficile) - 4 XP
-      { color: "purple", minHp: 30, maxHp: 40, minAtk: 15, maxAtk: 20, xp: 5 }, // Violet foncé (extrême) - 5 XP
+      { color: "CATAPOULPE", minHp: 10, maxHp: 20, minAtk: 5, maxAtk: 10, xp: 1 }, // Vert (facile) - 1 XP
+      { color: "HORRIGLUANT", minHp: 15, maxHp: 25, minAtk: 7, maxAtk: 12, xp: 2 }, // Jaune (moyen) - 2 XP
+      { color: "GOBOURRIN", minHp: 20, maxHp: 30, minAtk: 10, maxAtk: 15, xp: 3 }, // Orange (difficile) - 3 XP
+      { color: "TADOS", minHp: 25, maxHp: 35, minAtk: 12, maxAtk: 18, xp: 4 }, // Rouge (très difficile) - 4 XP
+      { color: "GROLEMME", minHp: 30, maxHp: 40, minAtk: 15, maxAtk: 20, xp: 5 }, // Violet foncé (extrême) - 5 XP
     ];
 
     // Placement des monstres
@@ -227,19 +227,19 @@ treasureCell.appendChild(treasureImage); // Ajoute l'image du trésor
       // Choix du GIF en fonction de la couleur du monstre
       let mobGif = "";
       switch (creature.color) {
-        case "green":
+        case "CATAPOULPE":
           mobGif = "src/mob1.gif";
           break;
-        case "yellow":
+        case "HORRIGLUANT":
           mobGif = "src/mob2.gif";
           break;
-        case "orange":
+        case "GOBOURRIN":
           mobGif = "src/mob3.gif";
           break;
-        case "red":
+        case "TADOS":
           mobGif = "src/mob4.gif";
           break;
-        case "purple":
+        case "GROLEMME":
           mobGif = "src/mob5.gif";
           break;
         default:
