@@ -503,7 +503,9 @@ h1 {
   }
 }
 
-/* Mobile */
+/* ======================================== */
+/*  Responsive Design pour mobile           */
+/* ======================================== */
 @media (max-width: 767px) {
   .game-layout {
     flex-direction: column;
@@ -537,5 +539,27 @@ h1 {
     width: 40px;
     height: 40px;
     font-size: 18px;
+  }
+
+  /* Réduction de la grille pour s'adapter à un écran étroit */
+  .grid {
+    /* On passe à une taille de cellule de 34px.
+       Calcul : (10 x 34px) + (9 x 1px de gap) = 340 + 9 = 349px environ */
+    grid-template-columns: repeat(10, 34px);
+    grid-template-rows: repeat(10, 34px);
+    width: calc(10 * 34px + 9 * 1px);
+    height: calc(10 * 34px + 9 * 1px);
+  }
+
+  /* Réduction de la taille du logo */
+  .game-logo {
+    height: 50px;  /* Par exemple, passe de 80px à 50px */
+  }
+
+  /* Optionnel : permettre au header de se réorganiser et centrer son contenu */
+  .header {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
   }
 }
