@@ -3,7 +3,7 @@
 Bienvenue dans Dungeon Speed, un mini-jeu de chasse au trésor et de monstres développé en JavaScript, HTML et CSS. Le but : survivre dans un donjon sombre, vaincre des monstres, amasser de l’expérience et trouver le trésor… avant que le temps ne s’écoule!
 
 
-(Illustration ou capture d’écran, si disponible)
+
 
 Sommaire
 

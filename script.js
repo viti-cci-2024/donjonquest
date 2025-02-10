@@ -771,6 +771,23 @@ document.addEventListener("DOMContentLoaded", () => {
       }, duration + 500);
     }
   }
+// Empêcher la fermeture des modales en cliquant en dehors
+document.addEventListener("DOMContentLoaded", () => {
+  const modals = ["rulesModal", "winModal", "deathModal", "timeUpModal"];
+
+  modals.forEach(id => {
+      let modalElement = document.getElementById(id); // Récupération de l'élément modal
+      if (modalElement) {
+          let modalInstance = new bootstrap.Modal(modalElement, { backdrop: 'static', keyboard: false });
+
+          modalElement.addEventListener("hidden.bs.modal", (event) => {
+              if (id !== "rulesModal") {
+                  modalInstance.show(); // Empêche la fermeture sauf pour les règles
+              }
+          });
+      }
+  });
+});
 
   // l’effet d’éclair
 
