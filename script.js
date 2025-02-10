@@ -430,6 +430,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // Jouer le woosh de déplacement
+    const moveSound = document.getElementById("move-sound");
+    moveSound.volume = 0.7; // Ajuste le volume (optionnel)
+    moveSound.play().catch(error => console.log("Erreur lecture audio :", error));
+
     gameState.player.x = newX;
     gameState.player.y = newY;
 
